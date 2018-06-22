@@ -1,9 +1,11 @@
-*.tfstate
-*.tfstate.*
-**/*.pem
+# Compiled files
+**/*.tfstate
+**/*.tfstate.backup
+**/*.terraform.tfstate*
+# Module directory
+.idea
+*.iml
 **/.terraform
-**/terraform.tfstate
-**/terraform.tfstate.backup
 
-dev.auto.tfvars
-*.zip
+build-harness
+.build-harness

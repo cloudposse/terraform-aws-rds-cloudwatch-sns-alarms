@@ -1,0 +1,111 @@
+---
+#
+# This is the canonical configuration for the `README.md`
+# Run `make readme` to rebuild the `README.md`
+#
+
+# Name of this project
+name: terraform-aws-rds-cloudwatch-sns-alarms
+
+# License of this project
+license: "APACHE2"
+
+# Canonical GitHub repo
+github_repo: cloudposse/terraform-aws-rds-cloudwatch-sns-alarms
+
+# Badges to display
+badges:
+  - name: "Build Status"
+    image: "https://travis-ci.org/cloudposse/terraform-aws-rds-cloudwatch-sns-alarms.svg?branch=master"
+    url: "https://travis-ci.org/cloudposse/terraform-aws-rds-cloudwatch-sns-alarms"
+  - name: "Latest Release"
+    image: "https://img.shields.io/github/release/cloudposse/terraform-aws-rds-cloudwatch-sns-alarms.svg"
+    url: "https://github.com/cloudposse/terraform-aws-rds-cloudwatch-sns-alarms/releases"
+  - name: "Slack Community"
+    image: "https://slack.cloudposse.com/badge.svg"
+    url: "https://slack.cloudposse.com"
+
+# Short description of this project
+description: |-
+  Terraform module that configures important RDS alerts using CloudWatch and sends them to an SNS topic.
+
+  Create a set of sane RDS CloudWatch alerts for monitoring the health of an RDS instance.
+
+usage: |-
+
+  | area    | metric           | comparison operator  | threshold | rationale                                                                                                                                                                                              |
+  |---------|------------------|----------------------|-----------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+  | Storage | BurstBalance     | `<`                  | 20 %      | 20 % of credits allow you to burst for a few minutes which gives you enough time to a) fix the inefficiency, b) add capacity or c) switch to io1 storage type.                                         |
+  | Storage | DiskQueueDepth   | `>`                  | 64        | This number is calculated from our experience with RDS workloads.                                                                                                                                      |
+  | Storage | FreeStorageSpace | `<`                  | 2 GB      | 2 GB usually provides enough time to a) fix why so much space is consumed or b) add capacity. You can also modify this value to 10% of your database capacity.                                         |
+  | CPU     | CPUUtilization   | `>`                  | 80 %      | Queuing theory tells us the latency increases exponentially with utilization. In practice, we see higher latency when utilization exceeds 80% and unacceptable high latency with utilization above 90% |
+  | CPU     | CPUCreditBalance | `<`                  | 20        | One credit equals 1 minute of 100% usage of a vCPU. 20 credits should give you enough time to a) fix the inefficiency, b) add capacity or c) don't use t2 type.                                        |
+  | Memory  | FreeableMemory   | `<`                  | 64 MB     | This number is calculated from our experience with RDS workloads.                                                                                                                                      |
+  | Memory  | SwapUsage        | `>`                  | 256 MB    | Sometimes you can not entirely avoid swapping. But once the database accesses paged memory, it will slow down.                                                                                         |
+
+examples: |-
+
+  See the [`examples/`](examples/) directory for working examples.
+
+  ```hcl
+  resource "aws_db_instance" "default" {
+    allocated_storage    = 10
+    storage_type         = "gp2"
+    engine               = "mysql"
+    engine_version       = "5.7"
+    instance_class       = "db.t2.micro"
+    identifier_prefix    = "rds-server-example"
+    name                 = "mydb"
+    username             = "foo"
+    password             = "foobarbaz"
+    parameter_group_name = "default.mysql5.7"
+    apply_immediately    = "true"
+    skip_final_snapshot  = "true"
+  }
+
+  module "rds_alarms" {
+    source         = "github::https://github.com/bitflight-public/terraform-aws-rds-alerts.git?ref=master"
+    db_instance_id = "${aws_db_instance.default.id}"
+  }
+  ```
+
+# Other files to include in this README from the project folder
+include:
+  - "docs/terraform.md"
+  - "docs/targets.md"
+
+related:
+  - name: "terraform-aws-ec2-cloudwatch-sns-alarms"
+    description: "Terraform module that configures CloudWatch SNS alerts for EC2 instances"
+    url: "https://github.com/cloudposse/terraform-aws-ec2-cloudwatch-sns-alarms"
+
+  - name: "terraform-aws-ecs-cloudwatch-sns-alarms"
+    description: "Terraform module for creating ECS service level alerts that go to an SNS endpoint"
+    url: "https://github.com/cloudposse/terraform-aws-ecs-cloudwatch-sns-alarms"
+
+  - name: "terraform-aws-efs-cloudwatch-sns-alarms"
+    description: "Terraform module that configures CloudWatch SNS alerts for EFS"
+    url: "https://github.com/cloudposse/terraform-aws-efs-cloudwatch-sns-alarms"
+
+  - name: "terraform-aws-elasticache-cloudwatch-sns-alarms"
+    description: "Terraform module that configures CloudWatch SNS alerts for ElastiCache"
+    url: "https://github.com/cloudposse/terraform-aws-elasticache-cloudwatch-sns-alarms"
+
+  - name: "terraform-aws-lambda-cloudwatch-sns-alarms"
+    description: "Terraform module for creating a set of Lambda alarms and outputting to an endpoint"
+    url: "https://github.com/cloudposse/terraform-aws-lambda-cloudwatch-sns-alarms"
+
+  - name: "terraform-aws-sqs-cloudwatch-sns-alarms"
+    description: "Terraform module for creating alarms for SQS and notifying endpoints"
+    url: "https://github.com/cloudposse/terraform-aws-sqs-cloudwatch-sns-alarms"
+
+# Contributors to this project
+contributors:
+  - name: "Jamie Nelson"
+    homepage: "https://github.com/Jamie-BitFlight"
+    avatar: "https://avatars0.githubusercontent.com/u/25075504?s=144&u=ac7e53bda3706cb9d51907808574b6d342703b3e&v=4"
+    github: "Jamie-BitFlight"
+  - name: "Erik Osterman"
+    homepage: "https://github.com/osterman"
+    avatar: "http://s.gravatar.com/avatar/88c480d4f73b813904e00a5695a454cb?s=144"
+    github: "osterman"
