@@ -16,5 +16,5 @@
 
 | Name | Description |
 |------|-------------|
-| sns_topic_arn |  |
+| sns_topic_arn | The ARN of the SNS topic |
 

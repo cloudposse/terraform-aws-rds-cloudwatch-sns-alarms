@@ -64,7 +64,7 @@ examples: |-
   }
 
   module "rds_alarms" {
-    source         = "github::https://github.com/bitflight-public/terraform-aws-rds-alerts.git?ref=master"
+    source         = "github::https://github.com/cloudposse/terraform-aws-rds-alerts.git?ref=master"
     db_instance_id = "${aws_db_instance.default.id}"
   }
   ```
@@ -102,10 +102,6 @@ related:
 # Contributors to this project
 contributors:
   - name: "Jamie Nelson"
-    homepage: "https://github.com/Jamie-BitFlight"
-    avatar: "https://avatars0.githubusercontent.com/u/25075504?s=144&u=ac7e53bda3706cb9d51907808574b6d342703b3e&v=4"
     github: "Jamie-BitFlight"
   - name: "Erik Osterman"
-    homepage: "https://github.com/osterman"
-    avatar: "http://s.gravatar.com/avatar/88c480d4f73b813904e00a5695a454cb?s=144"
     github: "osterman"
