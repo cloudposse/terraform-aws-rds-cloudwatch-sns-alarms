@@ -84,7 +84,7 @@ data "aws_iam_policy_document" "sns_topic_policy" {
   }
 
   statement {
-    sid       = "Allow CloudwatchEvents"
+    sid       = "Allow RDS Event Notification"
     actions   = ["sns:Publish"]
     resources = ["${aws_sns_topic.default.arn}"]
 
