@@ -50,7 +50,7 @@ resource "aws_cloudwatch_metric_alarm" "cpu_credit_balance_too_low" {
   alarm_name          = "cpu_credit_balance_too_low"
   comparison_operator = "LessThanThreshold"
   evaluation_periods  = "1"
-  metric_name         = "CPUUtilization"
+  metric_name         = "CPUCreditBalance"
   namespace           = "AWS/RDS"
   period              = "600"
   statistic           = "Average"
