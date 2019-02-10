@@ -66,7 +66,7 @@ resource "aws_db_instance" "default" {
 }
 
 module "rds_alarms" {
-  source         = "github::https://github.com/cloudposse/terraform-aws-rds-alerts.git?ref=master"
+  source         = "git::https://github.com/cloudposse/terraform-aws-rds-cloudwatch-sns-alarms.git?ref=tags/0.1.5"
   db_instance_id = "${aws_db_instance.default.id}"
 }
 ```
