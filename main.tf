@@ -24,7 +24,7 @@ resource "aws_db_event_subscription" "default" {
 # Make a topic
 resource "aws_sns_topic" "default_prefix" {
   count       = "${var.sns_topic == "" ? 1 : 0}"
-  name_prefix  = "rds-threshold-alerts"
+  name_prefix = "rds-threshold-alerts"
 }
 
 resource "aws_sns_topic" "default" {
