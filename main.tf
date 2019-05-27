@@ -2,6 +2,8 @@ terraform {
   backend "s3" {}
 }
 
+data "aws_caller_identity" "default" {}
+
 resource "aws_db_event_subscription" "default" {
   name_prefix = "rds-event-sub"
   sns_topic   = "${local.aws_sns_topic_arn}"
