@@ -5,7 +5,7 @@ terraform {
 data "aws_caller_identity" "default" {}
 
 resource "aws_db_event_subscription" "default" {
-  name_prefix = "rds-event-sub"
+  name_prefix = "${var.alarm_name_prefix}${var.db_instance_id}-"
   sns_topic   = "${local.aws_sns_topic_arn}"
 
   source_type = "db-instance"
