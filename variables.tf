@@ -1,3 +1,15 @@
+variable "alarm_name_prefix" {
+  description = "Alarm name prefix"
+  type        = "string"
+  default     = ""
+}
+
+variable "alarm_name_postfix" {
+  description = "Alarm name postfix"
+  type        = "string"
+  default     = ""
+}
+
 variable "db_instance_id" {
   description = "The instance ID of the RDS database instance that you want to monitor."
   type        = "string"
