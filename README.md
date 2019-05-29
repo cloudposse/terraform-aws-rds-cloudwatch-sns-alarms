@@ -86,12 +86,17 @@ module "rds_alarms" {
 | free_storage_space_threshold | The minimum amount of available storage space in Byte. | string | `2000000000` | no |
 | freeable_memory_threshold | The minimum amount of available random access memory in Byte. | string | `64000000` | no |
 | swap_usage_threshold | The maximum amount of swap space used on the DB instance in Byte. | string | `256000000` | no |
+| alarm_name_postfix | Alarm name postfix | string | `` | no |
+| alarm_name_prefix | Alarm name prefix | string | `` | no |
+| sns_topic | SNS topic you want to specify. If leave empty, it will use a prefix and a timestampe appended | string | `` | no |
+
 
 ## Outputs
 
 | Name | Description |
 |------|-------------|
 | sns_topic_arn | The ARN of the SNS topic |
+| sns_topic_name | The SNS topic name      |
 
 ## Makefile Targets
 ```
