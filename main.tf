@@ -7,17 +7,38 @@
 # }
 data "aws_caller_identity" "default" {}
 
+module "sns_topic_default_label" {
+  source     = "git::https://github.com/cloudposse/terraform-terraform-label.git?ref=tags/0.2.1"
+  name       = "${var.name}"
+  namespace  = "${var.namespace}"
+  stage      = "${var.stage}"
+  delimiter  = "${var.delimiter}"
+  attributes = "${compact(concat(var.attributes, list("rds", "threshold", "alerts")))}"
+  tags       = "${var.tags}"
+}
+
 # Make a topic
 resource "aws_sns_topic" "default" {
-  name_prefix = "rds-threshold-alerts"
+  name_prefix = "${module.sns_topic_default_label.id}"
+  tags        = "${module.sns_topic_default_label.tags}"
+}
+
+module "db_event_subscription_default_label" {
+  source     = "git::https://github.com/cloudposse/terraform-terraform-label.git?ref=tags/0.2.1"
+  name       = "${var.name}"
+  namespace  = "${var.namespace}"
+  stage      = "${var.stage}"
+  delimiter  = "${var.delimiter}"
+  attributes = "${compact(concat(var.attributes, list("rds", "event", "sub")))}"
+  tags       = "${var.tags}"
 }
 
 resource "aws_db_event_subscription" "default" {
-  name_prefix = "rds-event-sub"
+  name_prefix = "${module.db_event_subscription_default_label.id}"
   sns_topic   = "${aws_sns_topic.default.arn}"
-
   source_type = "db-instance"
   source_ids  = ["${var.db_instance_id}"]
+  tags        = "${module.db_event_subscription_default_label.tags}"
 
   event_categories = [
     "failover",
@@ -37,11 +58,7 @@ resource "aws_sns_topic_policy" "default" {
 }
 
 data "aws_iam_policy_document" "sns_topic_policy" {
-  policy_id = "__default_policy_ID"
-
   statement {
-    sid = "__default_statement_ID"
-
     actions = [
       "SNS:Subscribe",
       "SNS:SetTopicAttributes",
