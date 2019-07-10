@@ -71,24 +71,28 @@ Instead pin to the release tag (e.g. `?ref=tags/x.y.z`) of one of our [latest re
 See the [`examples/`](examples/) directory for working examples.
 
 ```hcl
-resource "aws_db_instance" "default" {
-  allocated_storage    = 10
+module "rds_instance" {
+  source               = "git::https://github.com/cloudposse/terraform-aws-rds.git?ref=master"
+  namespace            = "eg"
+  stage                = "prod"
+  name                 = "app"
+  allocated_storage    = "5"
   storage_type         = "gp2"
+  database_name        = "wordpress"
+  database_user        = "admin"
+  database_password    = "xxxxxxxxxxxx"
+  database_port        = 3306
+  db_parameter_group   = "mysql5.7"
   engine               = "mysql"
-  engine_version       = "5.7"
-  instance_class       = "db.t2.micro"
-  identifier_prefix    = "rds-server-example"
-  name                 = "mydb"
-  username             = "foo"
-  password             = "foobarbaz"
-  parameter_group_name = "default.mysql5.7"
-  apply_immediately    = "true"
-  skip_final_snapshot  = "true"
+  engine_version       = "5.7.17"
+  major_engine_version = "5.7"
+  subnet_ids           = ["sb-xxxxxxxxx", "sb-xxxxxxxxx"]
+  vpc_id               = "vpc-xxxxxxxx"
 }
 
 module "rds_alarms" {
-  source         = "git::https://github.com/cloudposse/terraform-aws-rds-cloudwatch-sns-alarms.git?ref=tags/0.1.5"
-  db_instance_id = "${aws_db_instance.default.id}"
+  source         = "git::https://github.com/cloudposse/terraform-aws-rds-cloudwatch-sns-alarms.git?ref=master"
+  db_instance_id = module.rds_instance.instance_id
 }
 ```
 
@@ -98,7 +102,7 @@ module "rds_alarms" {
 
 | Name | Description | Type | Default | Required |
 |------|-------------|:----:|:-----:|:-----:|
-| attributes | List of attributes to add to label. | list | `<list>` | no |
+| attributes | List of attributes to add to label. | list(string) | `<list>` | no |
 | burst_balance_threshold | The minimum percent of General Purpose SSD (gp2) burst-bucket I/O credits available. | string | `20` | no |
 | cpu_credit_balance_threshold | The minimum number of CPU credits (t2 instances only) available. | string | `20` | no |
 | cpu_utilization_threshold | The maximum percentage of CPU utilization. | string | `80` | no |
@@ -111,7 +115,7 @@ module "rds_alarms" {
 | namespace | Namespace (e.g. `cp` or `cloudposse`) | string | - | yes |
 | stage | Stage (e.g. `prod`, `dev`, `staging`) | string | - | yes |
 | swap_usage_threshold | The maximum amount of swap space used on the DB instance in Byte. | string | `256000000` | no |
-| tags | Map of key-value pairs to use for tags. | map | `<map>` | no |
+| tags | Map of key-value pairs to use for tags. | map(string) | `<map>` | no |
 
 ## Outputs
 

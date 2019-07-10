@@ -1,44 +1,37 @@
-# resource "aws_cloudwatch_event_target" "sns" {
-#   rule       = "${aws_cloudwatch_event_rule.default.name}"
-#   target_id  = "SendToSNS"
-#   arn        = "${var.sns_topic_arn}"
-#   depends_on = ["aws_cloudwatch_event_rule.default"]
-#   input      = "${var.sns_message_override}"
-# }
 data "aws_caller_identity" "default" {}
 
 module "sns_topic_default_label" {
-  source     = "git::https://github.com/cloudposse/terraform-terraform-label.git?ref=tags/0.2.1"
-  name       = "${var.name}"
-  namespace  = "${var.namespace}"
-  stage      = "${var.stage}"
-  delimiter  = "${var.delimiter}"
-  attributes = "${compact(concat(var.attributes, list("rds", "threshold", "alerts")))}"
-  tags       = "${var.tags}"
+  source     = "git::https://github.com/cloudposse/terraform-terraform-label.git?ref=tags/0.4.0"
+  name       = var.name
+  namespace  = var.namespace
+  stage      = var.stage
+  delimiter  = var.delimiter
+  attributes = compact(concat(var.attributes, ["rds", "threshold", "alerts"]))
+  tags       = var.tags
 }
 
 # Make a topic
 resource "aws_sns_topic" "default" {
-  name_prefix = "${module.sns_topic_default_label.id}"
-  tags        = "${module.sns_topic_default_label.tags}"
+  name_prefix = module.sns_topic_default_label.id
+  tags        = module.sns_topic_default_label.tags
 }
 
 module "db_event_subscription_default_label" {
-  source     = "git::https://github.com/cloudposse/terraform-terraform-label.git?ref=tags/0.2.1"
-  name       = "${var.name}"
-  namespace  = "${var.namespace}"
-  stage      = "${var.stage}"
-  delimiter  = "${var.delimiter}"
-  attributes = "${compact(concat(var.attributes, list("rds", "event", "sub")))}"
-  tags       = "${var.tags}"
+  source     = "git::https://github.com/cloudposse/terraform-terraform-label.git?ref=tags/0.4.0"
+  name       = var.name
+  namespace  = var.namespace
+  stage      = var.stage
+  delimiter  = var.delimiter
+  attributes = compact(concat(var.attributes, ["rds", "event", "sub"]))
+  tags       = var.tags
 }
 
 resource "aws_db_event_subscription" "default" {
-  name_prefix = "${module.db_event_subscription_default_label.id}"
-  sns_topic   = "${aws_sns_topic.default.arn}"
+  name_prefix = module.db_event_subscription_default_label.id
+  sns_topic   = aws_sns_topic.default.arn
   source_type = "db-instance"
-  source_ids  = ["${var.db_instance_id}"]
-  tags        = "${module.db_event_subscription_default_label.tags}"
+  source_ids  = [var.db_instance_id]
+  tags        = module.db_event_subscription_default_label.tags
 
   event_categories = [
     "failover",
@@ -49,12 +42,12 @@ resource "aws_db_event_subscription" "default" {
     "recovery",
   ]
 
-  depends_on = ["aws_sns_topic_policy.default"]
+  depends_on = [aws_sns_topic_policy.default]
 }
 
 resource "aws_sns_topic_policy" "default" {
-  arn    = "${aws_sns_topic.default.arn}"
-  policy = "${data.aws_iam_policy_document.sns_topic_policy.json}"
+  arn    = aws_sns_topic.default.arn
+  policy = data.aws_iam_policy_document.sns_topic_policy.json
 }
 
 data "aws_iam_policy_document" "sns_topic_policy" {
@@ -72,7 +65,7 @@ data "aws_iam_policy_document" "sns_topic_policy" {
     ]
 
     effect    = "Allow"
-    resources = ["${aws_sns_topic.default.arn}"]
+    resources = [aws_sns_topic.default.arn]
 
     principals {
       type        = "AWS"
@@ -84,7 +77,7 @@ data "aws_iam_policy_document" "sns_topic_policy" {
       variable = "AWS:SourceOwner"
 
       values = [
-        "${data.aws_caller_identity.default.account_id}",
+        data.aws_caller_identity.default.account_id,
       ]
     }
   }
@@ -92,7 +85,7 @@ data "aws_iam_policy_document" "sns_topic_policy" {
   statement {
     sid       = "Allow CloudwatchEvents"
     actions   = ["sns:Publish"]
-    resources = ["${aws_sns_topic.default.arn}"]
+    resources = [aws_sns_topic.default.arn]
 
     principals {
       type        = "Service"
@@ -103,7 +96,7 @@ data "aws_iam_policy_document" "sns_topic_policy" {
   statement {
     sid       = "Allow RDS Event Notification"
     actions   = ["sns:Publish"]
-    resources = ["${aws_sns_topic.default.arn}"]
+    resources = [aws_sns_topic.default.arn]
 
     principals {
       type        = "Service"
@@ -111,3 +104,4 @@ data "aws_iam_policy_document" "sns_topic_policy" {
     }
   }
 }
+
