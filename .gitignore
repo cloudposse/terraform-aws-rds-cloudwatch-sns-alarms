@@ -9,3 +9,6 @@
 
 build-harness
 .build-harness
+
+# vscode files
+*.code-workspace
