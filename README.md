@@ -41,6 +41,7 @@ It's 100% Open Source and licensed under the [APACHE2](LICENSE).
 | Memory  | FreeableMemory   | `<`                  | 64 MB     | This number is calculated from our experience with RDS workloads.                                                                                                                                      |
 | Memory  | SwapUsage        | `>`                  | 256 MB    | Sometimes you can not entirely avoid swapping. But once the database accesses paged memory, it will slow down.                                                                                         |
 
+The module will also alert on `failure` type events. See https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_Events.html for a list of events.
 
 
 
