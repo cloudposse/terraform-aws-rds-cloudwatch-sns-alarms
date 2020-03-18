@@ -3,6 +3,11 @@ variable "db_instance_id" {
   type        = "string"
 }
 
+variable "aws_sns_topic_arn" {
+  description = "The bla of the SNS topic you want to use for alerting"
+  type        = "string"
+}
+
 variable "burst_balance_threshold" {
   description = "The minimum percent of General Purpose SSD (gp2) burst-bucket I/O credits available."
   type        = "string"

@@ -7,7 +7,7 @@
  [![Build Status](https://travis-ci.org/cloudposse/terraform-aws-rds-cloudwatch-sns-alarms.svg?branch=master)](https://travis-ci.org/cloudposse/terraform-aws-rds-cloudwatch-sns-alarms) [![Latest Release](https://img.shields.io/github/release/cloudposse/terraform-aws-rds-cloudwatch-sns-alarms.svg)](https://github.com/cloudposse/terraform-aws-rds-cloudwatch-sns-alarms/releases) [![Slack Community](https://slack.cloudposse.com/badge.svg)](https://slack.cloudposse.com)
 
 
-Terraform module that configures important RDS alerts using CloudWatch and sends them to an SNS topic.
+Terraform module that configures important RDS alerts using CloudWatch and sends them to the chosen SNS topic.
 
 Create a set of sane RDS CloudWatch alerts for monitoring the health of an RDS instance.
 
@@ -68,6 +68,7 @@ resource "aws_db_instance" "default" {
 module "rds_alarms" {
   source         = "git::https://github.com/cloudposse/terraform-aws-rds-cloudwatch-sns-alarms.git?ref=tags/0.1.5"
   db_instance_id = "${aws_db_instance.default.id}"
+  aws_sns_topic_arn = "${aws_sns_topic.default.arn}"
 }
 ```
 
@@ -86,12 +87,6 @@ module "rds_alarms" {
 | free_storage_space_threshold | The minimum amount of available storage space in Byte. | string | `2000000000` | no |
 | freeable_memory_threshold | The minimum amount of available random access memory in Byte. | string | `64000000` | no |
 | swap_usage_threshold | The maximum amount of swap space used on the DB instance in Byte. | string | `256000000` | no |
-
-## Outputs
-
-| Name | Description |
-|------|-------------|
-| sns_topic_arn | The ARN of the SNS topic |
 
 ## Makefile Targets
 ```
