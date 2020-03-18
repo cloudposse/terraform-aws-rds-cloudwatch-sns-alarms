@@ -31,7 +31,7 @@ resource "aws_db_instance" "default" {
 
 module "rds_alarms" {
   source         = "../../"
-  db_instance_id = "${aws_db_instance.default.id}"
+  db_instance_ids = "${[aws_db_instance.default.id]}"
 }
 
 output "rds_alarms_sns_topic_arn" {

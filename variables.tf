@@ -1,6 +1,6 @@
-variable "db_instance_id" {
-  description = "The instance ID of the RDS database instance that you want to monitor."
-  type        = "string"
+variable "db_instance_ids" {
+  description = "The instance IDs of the RDS database instances that you want to monitor."
+  type        = "list"
 }
 
 variable "aws_sns_topic_arn" {

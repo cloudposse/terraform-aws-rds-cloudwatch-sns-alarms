@@ -11,7 +11,8 @@ locals {
 }
 
 resource "aws_cloudwatch_metric_alarm" "burst_balance_too_low" {
-  alarm_name          = "${var.db_instance_id}-burst_balance_too_low"
+  count               = "${length(var.db_instance_ids)}"
+  alarm_name          = "${var.db_instance_ids[count.index]}-burst_balance_too_low"
   comparison_operator = "LessThanThreshold"
   evaluation_periods  = "1"
   metric_name         = "BurstBalance"
@@ -23,13 +24,14 @@ resource "aws_cloudwatch_metric_alarm" "burst_balance_too_low" {
   alarm_actions       = ["${var.aws_sns_topic_arn}"]
   ok_actions          = ["${var.aws_sns_topic_arn}"]
 
-  dimensions = {
-    DBInstanceIdentifier = "${var.db_instance_id}"
+  dimensions {
+    DBInstanceIdentifier = "${var.db_instance_ids}"
   }
 }
 
 resource "aws_cloudwatch_metric_alarm" "cpu_utilization_too_high" {
-  alarm_name          = "${var.db_instance_id}-cpu_utilization_too_high"
+  count               = "${length(var.db_instance_ids)}"
+  alarm_name          = "${var.db_instance_ids[count.index]}-cpu_utilization_too_high"
   comparison_operator = "GreaterThanThreshold"
   evaluation_periods  = "1"
   metric_name         = "CPUUtilization"
@@ -41,13 +43,14 @@ resource "aws_cloudwatch_metric_alarm" "cpu_utilization_too_high" {
   alarm_actions       = ["${var.aws_sns_topic_arn}"]
   ok_actions          = ["${var.aws_sns_topic_arn}"]
 
-  dimensions = {
-    DBInstanceIdentifier = "${var.db_instance_id}"
+  dimensions {
+    DBInstanceIdentifier = "${var.db_instance_ids}"
   }
 }
 
 resource "aws_cloudwatch_metric_alarm" "cpu_credit_balance_too_low" {
-  alarm_name          = "${var.db_instance_id}-cpu_credit_balance_too_low"
+  count               = "${length(var.db_instance_ids)}"
+  alarm_name          = "${var.db_instance_ids[count.index]}-cpu_credit_balance_too_low"
   comparison_operator = "LessThanThreshold"
   evaluation_periods  = "1"
   metric_name         = "CPUCreditBalance"
@@ -59,13 +62,14 @@ resource "aws_cloudwatch_metric_alarm" "cpu_credit_balance_too_low" {
   alarm_actions       = ["${var.aws_sns_topic_arn}"]
   ok_actions          = ["${var.aws_sns_topic_arn}"]
 
-  dimensions = {
-    DBInstanceIdentifier = "${var.db_instance_id}"
+  dimensions {
+    DBInstanceIdentifier = "${var.db_instance_ids}"
   }
 }
 
 resource "aws_cloudwatch_metric_alarm" "disk_queue_depth_too_high" {
-  alarm_name          = "${var.db_instance_id}-disk_queue_depth_too_high"
+  count               = "${length(var.db_instance_ids)}"
+  alarm_name          = "${var.db_instance_ids[count.index]}-disk_queue_depth_too_high"
   comparison_operator = "GreaterThanThreshold"
   evaluation_periods  = "1"
   metric_name         = "DiskQueueDepth"
@@ -77,13 +81,14 @@ resource "aws_cloudwatch_metric_alarm" "disk_queue_depth_too_high" {
   alarm_actions       = ["${var.aws_sns_topic_arn}"]
   ok_actions          = ["${var.aws_sns_topic_arn}"]
 
-  dimensions = {
-    DBInstanceIdentifier = "${var.db_instance_id}"
+  dimensions {
+    DBInstanceIdentifier = "${var.db_instance_ids}"
   }
 }
 
 resource "aws_cloudwatch_metric_alarm" "freeable_memory_too_low" {
-  alarm_name          = "${var.db_instance_id}-freeable_memory_too_low"
+  count               = "${length(var.db_instance_ids)}"
+  alarm_name          = "${var.db_instance_ids[count.index]}-freeable_memory_too_low"
   comparison_operator = "LessThanThreshold"
   evaluation_periods  = "1"
   metric_name         = "FreeableMemory"
@@ -95,13 +100,14 @@ resource "aws_cloudwatch_metric_alarm" "freeable_memory_too_low" {
   alarm_actions       = ["${var.aws_sns_topic_arn}"]
   ok_actions          = ["${var.aws_sns_topic_arn}"]
 
-  dimensions = {
-    DBInstanceIdentifier = "${var.db_instance_id}"
+  dimensions {
+    DBInstanceIdentifier = "${var.db_instance_ids}"
   }
 }
 
 resource "aws_cloudwatch_metric_alarm" "free_storage_space_too_low" {
-  alarm_name          = "${var.db_instance_id}-free_storage_space_threshold"
+  count               = "${length(var.db_instance_ids)}"
+  alarm_name          = "${var.db_instance_ids[count.index]}-free_storage_space_threshold"
   comparison_operator = "LessThanThreshold"
   evaluation_periods  = "1"
   metric_name         = "FreeStorageSpace"
@@ -113,13 +119,14 @@ resource "aws_cloudwatch_metric_alarm" "free_storage_space_too_low" {
   alarm_actions       = ["${var.aws_sns_topic_arn}"]
   ok_actions          = ["${var.aws_sns_topic_arn}"]
 
-  dimensions = {
-    DBInstanceIdentifier = "${var.db_instance_id}"
+  dimensions {
+    DBInstanceIdentifier = "${var.db_instance_ids}"
   }
 }
 
 resource "aws_cloudwatch_metric_alarm" "swap_usage_too_high" {
-  alarm_name          = "${var.db_instance_id}-swap_usage_too_high"
+  count               = "${length(var.db_instance_ids)}"
+  alarm_name          = "${var.db_instance_ids[count.index]}-swap_usage_too_high"
   comparison_operator = "GreaterThanThreshold"
   evaluation_periods  = "1"
   metric_name         = "SwapUsage"
@@ -131,7 +138,7 @@ resource "aws_cloudwatch_metric_alarm" "swap_usage_too_high" {
   alarm_actions       = ["${var.aws_sns_topic_arn}"]
   ok_actions          = ["${var.aws_sns_topic_arn}"]
 
-  dimensions = {
-    DBInstanceIdentifier = "${var.db_instance_id}"
+  dimensions {
+    DBInstanceIdentifier = "${var.db_instance_ids}"
   }
 }

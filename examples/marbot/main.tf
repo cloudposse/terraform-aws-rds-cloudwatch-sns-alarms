@@ -48,5 +48,5 @@ resource "aws_db_instance" "default" {
 
 module "rds_alarms" {
   source         = "github::https://github.com/bitflight-public/terraform-aws-rds-alerts.git?ref=master"
-  db_instance_id = "${aws_db_instance.default.id}"
+  db_instance_ids = "${[aws_db_instance.default.id]}"
 }
