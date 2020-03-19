@@ -11,6 +11,7 @@ variable "aws_sns_topic_arn" {
 variable "alarm_name_prefix" {
   description = "Alarm name prefix for each alarm"
   type        = "string"
+  default     = ""
 }
 
 variable "burst_balance_threshold" {
