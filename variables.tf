@@ -8,6 +8,11 @@ variable "aws_sns_topic_arn" {
   type        = "string"
 }
 
+variable "alarm_name_prefix" {
+  description = "Alarm name prefix for each alarm"
+  type        = "string"
+}
+
 variable "burst_balance_threshold" {
   description = "The minimum percent of General Purpose SSD (gp2) burst-bucket I/O credits available."
   type        = "string"
