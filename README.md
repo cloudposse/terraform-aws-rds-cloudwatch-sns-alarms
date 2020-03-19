@@ -68,7 +68,7 @@ resource "aws_db_instance" "default" {
 
 module "rds_alarms" {
   source         = "git::https://github.com/cloudposse/terraform-aws-rds-cloudwatch-sns-alarms.git?ref=tags/0.1.5"
-  db_instance_ids = "${[aws_db_instance.default.id]}"
+  db_instance_ids = ["${aws_db_instance.default.id}"]
   aws_sns_topic_arn = "${aws_sns_topic.default.arn}"
 }
 ```
@@ -83,7 +83,7 @@ module "rds_alarms" {
 | burst_balance_threshold | The minimum percent of General Purpose SSD (gp2) burst-bucket I/O credits available. | string | `20` | no |
 | cpu_credit_balance_threshold | The minimum number of CPU credits (t2 instances only) available. | string | `20` | no |
 | cpu_utilization_threshold | The maximum percentage of CPU utilization. | string | `80` | no |
-| db_instance_ids | The instance IDs of the RDS database instance that you want to monitor. | string | - | yes |
+| db_instance_ids | The instance IDs of the RDS database instance that you want to monitor. | list | - | yes |
 | aws_sns_topic_arn | ARN of SNS topic to use. | string | - | yes |
 | alarm_name_prefix | Alarm name prefix for each alarm. | string | `` | no |
 | disk_queue_depth_threshold | The maximum number of outstanding IOs (read/write requests) waiting to access the disk. | string | `64` | no |
