@@ -83,6 +83,8 @@ module "rds_alarms" {
 | db_instance_ids | The instance IDs of the RDS database instance that you want to monitor. | list | - | yes |
 | aws_sns_topic_arn | ARN of SNS topic to use. | string | - | yes |
 | alarm_name_prefix | Alarm name prefix for each alarm. | string | `` | no |
+| alarm_period | The threshold is analyzed over the last X seconds, where X is alarm_period | string | `600` | no |
+| alarm_evaluation_periods | The number of periods over which data is compared to the specified threshold. | string | `1` | no |
 | burst_balance_threshold | The minimum percent of General Purpose SSD (gp2) burst-bucket I/O credits available. | string | `20` | no |
 | cpu_credit_balance_threshold | The minimum number of CPU credits (t2 instances only) available. | string | `20` | no |
 | cpu_utilization_threshold | The maximum percentage of CPU utilization. | string | `80` | no |

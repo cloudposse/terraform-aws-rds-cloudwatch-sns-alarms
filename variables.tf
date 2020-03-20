@@ -14,6 +14,18 @@ variable "alarm_name_prefix" {
   default     = ""
 }
 
+variable "alarm_period" {
+  description = "The threshold is analyzed over the last X seconds, where X is alarm_period"
+  type        = string
+  default     = "600"
+}
+
+variable "alarm_evaluation_periods" {
+  description = "The number of periods over which data is compared to the specified threshold."
+  type        = string
+  default     = "1"
+}
+
 variable "burst_balance_threshold" {
   description = "The minimum percent of General Purpose SSD (gp2) burst-bucket I/O credits available."
   type        = string
