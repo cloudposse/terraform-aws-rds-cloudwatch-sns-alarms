@@ -8,19 +8,19 @@ variable "aws_sns_topic_arn" {
   type        = string
 }
 
-variable "alarm_name_prefix" {
+variable "name_prefix" {
   description = "Alarm name prefix for each alarm"
   type        = string
   default     = ""
 }
 
-variable "alarm_period" {
+variable "period" {
   description = "The threshold is analyzed over the last X seconds, where X is alarm_period"
   type        = string
   default     = "600"
 }
 
-variable "alarm_evaluation_periods" {
+variable "evaluation_periods" {
   description = "The number of periods over which data is compared to the specified threshold."
   type        = string
   default     = "1"
