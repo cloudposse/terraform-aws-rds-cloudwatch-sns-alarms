@@ -63,9 +63,14 @@ examples: |-
     skip_final_snapshot  = "true"
   }
 
+  resource "aws_sns_topic" "default" {
+    name_prefix = "rds-threshold-alerts"
+  }
+
   module "rds_alarms" {
     source         = "git::https://github.com/cloudposse/terraform-aws-rds-cloudwatch-sns-alarms.git?ref=tags/0.1.5"
-    db_instance_ids = "${aws_db_instance.default.id}"
+    db_instance_ids = ["${aws_db_instance.default.id}"]
+    aws_sns_topic_arn = "${aws_sns_topic.default.arn}"
   }
   ```
 
