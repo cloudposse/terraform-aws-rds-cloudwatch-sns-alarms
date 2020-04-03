@@ -41,6 +41,13 @@ variable "free_storage_space_threshold" {
   # 2 Gigabyte in Byte
 }
 
+variable "oldest_replication_threshold" {
+  description = "The maximum amount of replication lag space in Megabyte."
+  type        = string
+  default     = 1000
+  # 1 Gigabyte in Megabyte
+}
+
 variable "swap_usage_threshold" {
   description = "The maximum amount of swap space used on the DB instance in Byte."
   type        = string
