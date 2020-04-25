@@ -233,12 +233,15 @@ Check out [our other projects][github], [apply for a job][jobs], or [hire us][hi
 
 ### Contributors
 
-|  [![Jamie Nelson][Jamie-BitFlight_avatar]][Jamie-BitFlight_homepage]<br/>[Jamie Nelson][Jamie-BitFlight_homepage] | [![Erik Osterman][osterman_avatar]][osterman_homepage]<br/>[Erik Osterman][osterman_homepage] |
-|---|---|
+|  [![Jamie Nelson][Jamie-BitFlight_avatar]][Jamie-BitFlight_homepage]<br/>[Jamie Nelson][Jamie-BitFlight_homepage] | [![Erik Osterman][osterman_avatar]][osterman_homepage]<br/>[Erik Osterman][osterman_homepage] | [![Daniel Patriche][rebelthor_avatar]][rebelthor_homepage]<br/>[Daniel Patriche][rebelthor_homepage] |
+|---|---|---|
 
   [Jamie-BitFlight_homepage]: https://github.com/Jamie-BitFlight
   [Jamie-BitFlight_avatar]: https://github.com/Jamie-BitFlight.png?size=150
   [osterman_homepage]: https://github.com/osterman
   [osterman_avatar]: https://github.com/osterman.png?size=150
+  [rebelthor_homepage]: https://github.com/rebelthor
+  [rebelthor_avatar]: https://github.com/rebelthor.png?size=150
+
 
 
