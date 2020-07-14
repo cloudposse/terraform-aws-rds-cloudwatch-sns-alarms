@@ -15,13 +15,11 @@ variable "cpu_utilization_threshold" {
   default     = 80
 }
 
-# When defined, this variable creates a useless alarm.
-# I am commenting this out instead of deleting it primarly because it came from the source of this module.
-#variable "cpu_credit_balance_threshold" {
-#  description = "The minimum number of CPU credits (t2 instances only) available."
-#  type        = string
-#  default     = 20
-#}
+variable "cpu_credit_balance_threshold" {
+  description = "The minimum number of CPU credits (t2 instances only) available."
+  type        = string
+  default     = 0
+}
 
 variable "disk_queue_depth_threshold" {
   description = "The maximum number of outstanding IOs (read/write requests) waiting to access the disk."
