@@ -13,7 +13,7 @@ locals {
 module "burst_balance_label" {
   source      = "git::https://github.com/cloudposse/terraform-null-label.git?ref=tags/0.19.2"
   namespace   = var.namespace
-  name        = "burst_balance_too_low"
+  name        = "burst-balance-too-low"
   stage       = var.stage
   environment = var.environment
   delimiter   = var.delimiter
@@ -42,7 +42,7 @@ resource "aws_cloudwatch_metric_alarm" "burst_balance_too_low" {
 module "cpu_utilization_label" {
   source      = "git::https://github.com/cloudposse/terraform-null-label.git?ref=tags/0.19.2"
   namespace   = var.namespace
-  name        = "cpu_utilization_too_high"
+  name        = "cpu-utilization-too-high"
   stage       = var.stage
   environment = var.environment
   delimiter   = var.delimiter
@@ -71,7 +71,7 @@ resource "aws_cloudwatch_metric_alarm" "cpu_utilization_too_high" {
 module "cpu_credit_balance_label" {
   source      = "git::https://github.com/cloudposse/terraform-null-label.git?ref=tags/0.19.2"
   namespace   = var.namespace
-  name        = "cpu_credit_balance_too_low"
+  name        = "cpu-credit-balance-too-low"
   stage       = var.stage
   environment = var.environment
   delimiter   = var.delimiter
@@ -100,7 +100,7 @@ resource "aws_cloudwatch_metric_alarm" "cpu_credit_balance_too_low" {
 module "disk_queue_depth_label" {
   source      = "git::https://github.com/cloudposse/terraform-null-label.git?ref=tags/0.19.2"
   namespace   = var.namespace
-  name        = "disk_queue_depth_too_high"
+  name        = "disk-queue-depth-too-high"
   stage       = var.stage
   environment = var.environment
   delimiter   = var.delimiter
@@ -129,7 +129,7 @@ resource "aws_cloudwatch_metric_alarm" "disk_queue_depth_too_high" {
 module "freeable_memory_label" {
   source      = "git::https://github.com/cloudposse/terraform-null-label.git?ref=tags/0.19.2"
   namespace   = var.namespace
-  name        = "freeable_memory_too_low"
+  name        = "freeable-memory-too-low"
   stage       = var.stage
   environment = var.environment
   delimiter   = var.delimiter
@@ -158,7 +158,7 @@ resource "aws_cloudwatch_metric_alarm" "freeable_memory_too_low" {
 module "free_storage_label" {
   source      = "git::https://github.com/cloudposse/terraform-null-label.git?ref=tags/0.19.2"
   namespace   = var.namespace
-  name        = "free_storage_space_threshold"
+  name        = "free-storage-space-threshold"
   stage       = var.stage
   environment = var.environment
   delimiter   = var.delimiter
@@ -187,7 +187,7 @@ resource "aws_cloudwatch_metric_alarm" "free_storage_space_too_low" {
 module "swap_usage_label" {
   source      = "git::https://github.com/cloudposse/terraform-null-label.git?ref=tags/0.19.2"
   namespace   = var.namespace
-  name        = "swap_usage_too_high"
+  name        = "swap-usage-too-high"
   stage       = var.stage
   environment = var.environment
   delimiter   = var.delimiter
