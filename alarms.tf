@@ -10,8 +10,18 @@ locals {
   }
 }
 
+module "burst_balance_label" {
+  source      = "git::https://github.com/cloudposse/terraform-null-label.git?ref=tags/0.19.2"
+  namespace   = var.namespace
+  name        = "burst_balance_too_low"
+  stage       = var.stage
+  environment = var.environment
+  delimiter   = var.delimiter
+  attributes  = var.attributes
+}
+
 resource "aws_cloudwatch_metric_alarm" "burst_balance_too_low" {
-  alarm_name          = "burst_balance_too_low"
+  alarm_name          = module.burst_balance_label.id
   comparison_operator = "LessThanThreshold"
   evaluation_periods  = "1"
   metric_name         = "BurstBalance"
@@ -22,14 +32,25 @@ resource "aws_cloudwatch_metric_alarm" "burst_balance_too_low" {
   alarm_description   = "Average database storage burst balance over last 10 minutes too low, expect a significant performance drop soon"
   alarm_actions       = ["${aws_sns_topic.default.arn}"]
   ok_actions          = ["${aws_sns_topic.default.arn}"]
+  tags                = module.burst_balance_label.tags
 
   dimensions = {
     DBInstanceIdentifier = "${var.db_instance_id}"
   }
 }
 
+module "cpu_utilization_label" {
+  source      = "git::https://github.com/cloudposse/terraform-null-label.git?ref=tags/0.19.2"
+  namespace   = var.namespace
+  name        = "cpu_utilization_too_high"
+  stage       = var.stage
+  environment = var.environment
+  delimiter   = var.delimiter
+  attributes  = var.attributes
+}
+
 resource "aws_cloudwatch_metric_alarm" "cpu_utilization_too_high" {
-  alarm_name          = "cpu_utilization_too_high"
+  alarm_name          = module.cpu_utilization_label.id
   comparison_operator = "GreaterThanThreshold"
   evaluation_periods  = "1"
   metric_name         = "CPUUtilization"
@@ -40,14 +61,25 @@ resource "aws_cloudwatch_metric_alarm" "cpu_utilization_too_high" {
   alarm_description   = "Average database CPU utilization over last 10 minutes too high"
   alarm_actions       = ["${aws_sns_topic.default.arn}"]
   ok_actions          = ["${aws_sns_topic.default.arn}"]
+  tags                = module.cpu_utilization_label.tags
 
   dimensions = {
     DBInstanceIdentifier = "${var.db_instance_id}"
   }
 }
 
+module "cpu_credit_balance_label" {
+  source      = "git::https://github.com/cloudposse/terraform-null-label.git?ref=tags/0.19.2"
+  namespace   = var.namespace
+  name        = "cpu_credit_balance_too_low"
+  stage       = var.stage
+  environment = var.environment
+  delimiter   = var.delimiter
+  attributes  = var.attributes
+}
+
 resource "aws_cloudwatch_metric_alarm" "cpu_credit_balance_too_low" {
-  alarm_name          = "cpu_credit_balance_too_low"
+  alarm_name          = module.cpu_credit_balance_label.id
   comparison_operator = "LessThanThreshold"
   evaluation_periods  = "1"
   metric_name         = "CPUCreditBalance"
@@ -58,14 +90,25 @@ resource "aws_cloudwatch_metric_alarm" "cpu_credit_balance_too_low" {
   alarm_description   = "Average database CPU credit balance over last 10 minutes too low, expect a significant performance drop soon"
   alarm_actions       = ["${aws_sns_topic.default.arn}"]
   ok_actions          = ["${aws_sns_topic.default.arn}"]
+  tags                - module.cpu_credit_balance_label.tags
 
   dimensions = {
     DBInstanceIdentifier = "${var.db_instance_id}"
   }
 }
 
+module "disk_queue_depth_label" {
+  source      = "git::https://github.com/cloudposse/terraform-null-label.git?ref=tags/0.19.2"
+  namespace   = var.namespace
+  name        = "disk_queue_depth_too_high"
+  stage       = var.stage
+  environment = var.environment
+  delimiter   = var.delimiter
+  attributes  = var.attributes
+}
+
 resource "aws_cloudwatch_metric_alarm" "disk_queue_depth_too_high" {
-  alarm_name          = "disk_queue_depth_too_high"
+  alarm_name          = module.disk_queue_depth_label.id
   comparison_operator = "GreaterThanThreshold"
   evaluation_periods  = "1"
   metric_name         = "DiskQueueDepth"
@@ -76,14 +119,25 @@ resource "aws_cloudwatch_metric_alarm" "disk_queue_depth_too_high" {
   alarm_description   = "Average database disk queue depth over last 10 minutes too high, performance may suffer"
   alarm_actions       = ["${aws_sns_topic.default.arn}"]
   ok_actions          = ["${aws_sns_topic.default.arn}"]
+  tags                = module.disk_queue_depth_label.tags
 
   dimensions = {
     DBInstanceIdentifier = "${var.db_instance_id}"
   }
 }
 
+module "freeable_memory_label" {
+  source      = "git::https://github.com/cloudposse/terraform-null-label.git?ref=tags/0.19.2"
+  namespace   = var.namespace
+  name        = "freeable_memory_too_low"
+  stage       = var.stage
+  environment = var.environment
+  delimiter   = var.delimiter
+  attributes  = var.attributes
+}
+
 resource "aws_cloudwatch_metric_alarm" "freeable_memory_too_low" {
-  alarm_name          = "freeable_memory_too_low"
+  alarm_name          = module.freeable_memory_label.id
   comparison_operator = "LessThanThreshold"
   evaluation_periods  = "1"
   metric_name         = "FreeableMemory"
@@ -94,14 +148,25 @@ resource "aws_cloudwatch_metric_alarm" "freeable_memory_too_low" {
   alarm_description   = "Average database freeable memory over last 10 minutes too low, performance may suffer"
   alarm_actions       = ["${aws_sns_topic.default.arn}"]
   ok_actions          = ["${aws_sns_topic.default.arn}"]
+  tags                = module.freeable_memory_label.tags
 
   dimensions = {
     DBInstanceIdentifier = "${var.db_instance_id}"
   }
 }
 
+module "free_storage_label" {
+  source      = "git::https://github.com/cloudposse/terraform-null-label.git?ref=tags/0.19.2"
+  namespace   = var.namespace
+  name        = "free_storage_space_threshold"
+  stage       = var.stage
+  environment = var.environment
+  delimiter   = var.delimiter
+  attributes  = var.attributes
+} 
+
 resource "aws_cloudwatch_metric_alarm" "free_storage_space_too_low" {
-  alarm_name          = "free_storage_space_threshold"
+  alarm_name          = module.free_storage_label.id
   comparison_operator = "LessThanThreshold"
   evaluation_periods  = "1"
   metric_name         = "FreeStorageSpace"
@@ -112,14 +177,25 @@ resource "aws_cloudwatch_metric_alarm" "free_storage_space_too_low" {
   alarm_description   = "Average database free storage space over last 10 minutes too low"
   alarm_actions       = ["${aws_sns_topic.default.arn}"]
   ok_actions          = ["${aws_sns_topic.default.arn}"]
+  tags                = module.free_storage_label.tags
 
   dimensions = {
     DBInstanceIdentifier = "${var.db_instance_id}"
   }
 }
 
+module "swap_usage_label" {
+  source      = "git::https://github.com/cloudposse/terraform-null-label.git?ref=tags/0.19.2"
+  namespace   = var.namespace
+  name        = "swap_usage_too_high"
+  stage       = var.stage
+  environment = var.environment
+  delimiter   = var.delimiter
+  attributes  = var.attributes
+} 
+
 resource "aws_cloudwatch_metric_alarm" "swap_usage_too_high" {
-  alarm_name          = "swap_usage_too_high"
+  alarm_name          = module.swap_usage_label.id
   comparison_operator = "GreaterThanThreshold"
   evaluation_periods  = "1"
   metric_name         = "SwapUsage"
@@ -130,6 +206,7 @@ resource "aws_cloudwatch_metric_alarm" "swap_usage_too_high" {
   alarm_description   = "Average database swap usage over last 10 minutes too high, performance may suffer"
   alarm_actions       = ["${aws_sns_topic.default.arn}"]
   ok_actions          = ["${aws_sns_topic.default.arn}"]
+  tags                = module.swap_usage_label.tags
 
   dimensions = {
     DBInstanceIdentifier = "${var.db_instance_id}"
