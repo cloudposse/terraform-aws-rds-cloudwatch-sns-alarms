@@ -90,7 +90,7 @@ resource "aws_cloudwatch_metric_alarm" "cpu_credit_balance_too_low" {
   alarm_description   = "Average database CPU credit balance over last 10 minutes too low, expect a significant performance drop soon"
   alarm_actions       = ["${aws_sns_topic.default.arn}"]
   ok_actions          = ["${aws_sns_topic.default.arn}"]
-  tags                - module.cpu_credit_balance_label.tags
+  tags                = module.cpu_credit_balance_label.tags
 
   dimensions = {
     DBInstanceIdentifier = "${var.db_instance_id}"
