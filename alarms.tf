@@ -163,7 +163,7 @@ module "free_storage_label" {
   environment = var.environment
   delimiter   = var.delimiter
   attributes  = var.attributes
-} 
+}
 
 resource "aws_cloudwatch_metric_alarm" "free_storage_space_too_low" {
   alarm_name          = module.free_storage_label.id
@@ -192,7 +192,7 @@ module "swap_usage_label" {
   environment = var.environment
   delimiter   = var.delimiter
   attributes  = var.attributes
-} 
+}
 
 resource "aws_cloudwatch_metric_alarm" "swap_usage_too_high" {
   alarm_name          = module.swap_usage_label.id
