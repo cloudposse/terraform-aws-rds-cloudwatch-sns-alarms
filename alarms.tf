@@ -11,13 +11,12 @@ locals {
 }
 
 module "burst_balance_label" {
-  source      = "git::https://github.com/cloudposse/terraform-null-label.git?ref=tags/0.19.2"
-  namespace   = var.namespace
-  name        = "${var.name}-burst-balance-too-low"
-  stage       = var.stage
-  environment = var.environment
-  delimiter   = var.delimiter
-  attributes  = var.attributes
+  source     = "git::https://github.com/cloudposse/terraform-null-label.git?ref=tags/0.19.2"
+  namespace  = var.namespace
+  name       = "${var.name}-burst-balance-too-low"
+  stage      = var.stage
+  delimiter  = var.delimiter
+  attributes = var.attributes
 }
 
 resource "aws_cloudwatch_metric_alarm" "burst_balance_too_low" {
@@ -28,7 +27,7 @@ resource "aws_cloudwatch_metric_alarm" "burst_balance_too_low" {
   namespace           = "AWS/RDS"
   period              = "600"
   statistic           = "Average"
-  threshold           = "${local.thresholds["BurstBalanceThreshold"]}"
+  threshold           = local.thresholds["BurstBalanceThreshold"]
   alarm_description   = "Average database storage burst balance over last 10 minutes too low, expect a significant performance drop soon"
   alarm_actions       = ["${aws_sns_topic.default.arn}"]
   ok_actions          = ["${aws_sns_topic.default.arn}"]
@@ -40,13 +39,12 @@ resource "aws_cloudwatch_metric_alarm" "burst_balance_too_low" {
 }
 
 module "cpu_utilization_label" {
-  source      = "git::https://github.com/cloudposse/terraform-null-label.git?ref=tags/0.19.2"
-  namespace   = var.namespace
-  name        = "${var.name}-cpu-utilization-too-high"
-  stage       = var.stage
-  environment = var.environment
-  delimiter   = var.delimiter
-  attributes  = var.attributes
+  source     = "git::https://github.com/cloudposse/terraform-null-label.git?ref=tags/0.19.2"
+  namespace  = var.namespace
+  name       = "${var.name}-cpu-utilization-too-high"
+  stage      = var.stage
+  delimiter  = var.delimiter
+  attributes = var.attributes
 }
 
 resource "aws_cloudwatch_metric_alarm" "cpu_utilization_too_high" {
@@ -57,7 +55,7 @@ resource "aws_cloudwatch_metric_alarm" "cpu_utilization_too_high" {
   namespace           = "AWS/RDS"
   period              = "600"
   statistic           = "Average"
-  threshold           = "${local.thresholds["CPUUtilizationThreshold"]}"
+  threshold           = local.thresholds["CPUUtilizationThreshold"]
   alarm_description   = "Average database CPU utilization over last 10 minutes too high"
   alarm_actions       = ["${aws_sns_topic.default.arn}"]
   ok_actions          = ["${aws_sns_topic.default.arn}"]
@@ -69,13 +67,12 @@ resource "aws_cloudwatch_metric_alarm" "cpu_utilization_too_high" {
 }
 
 module "cpu_credit_balance_label" {
-  source      = "git::https://github.com/cloudposse/terraform-null-label.git?ref=tags/0.19.2"
-  namespace   = var.namespace
-  name        = "${var.name}-cpu-credit-balance-too-low"
-  stage       = var.stage
-  environment = var.environment
-  delimiter   = var.delimiter
-  attributes  = var.attributes
+  source     = "git::https://github.com/cloudposse/terraform-null-label.git?ref=tags/0.19.2"
+  namespace  = var.namespace
+  name       = "${var.name}-cpu-credit-balance-too-low"
+  stage      = var.stage
+  delimiter  = var.delimiter
+  attributes = var.attributes
 }
 
 resource "aws_cloudwatch_metric_alarm" "cpu_credit_balance_too_low" {
@@ -86,7 +83,7 @@ resource "aws_cloudwatch_metric_alarm" "cpu_credit_balance_too_low" {
   namespace           = "AWS/RDS"
   period              = "600"
   statistic           = "Average"
-  threshold           = "${local.thresholds["CPUCreditBalanceThreshold"]}"
+  threshold           = local.thresholds["CPUCreditBalanceThreshold"]
   alarm_description   = "Average database CPU credit balance over last 10 minutes too low, expect a significant performance drop soon"
   alarm_actions       = ["${aws_sns_topic.default.arn}"]
   ok_actions          = ["${aws_sns_topic.default.arn}"]
@@ -98,13 +95,12 @@ resource "aws_cloudwatch_metric_alarm" "cpu_credit_balance_too_low" {
 }
 
 module "disk_queue_depth_label" {
-  source      = "git::https://github.com/cloudposse/terraform-null-label.git?ref=tags/0.19.2"
-  namespace   = var.namespace
-  name        = "${var.name}-disk-queue-depth-too-high"
-  stage       = var.stage
-  environment = var.environment
-  delimiter   = var.delimiter
-  attributes  = var.attributes
+  source     = "git::https://github.com/cloudposse/terraform-null-label.git?ref=tags/0.19.2"
+  namespace  = var.namespace
+  name       = "${var.name}-disk-queue-depth-too-high"
+  stage      = var.stage
+  delimiter  = var.delimiter
+  attributes = var.attributes
 }
 
 resource "aws_cloudwatch_metric_alarm" "disk_queue_depth_too_high" {
@@ -115,7 +111,7 @@ resource "aws_cloudwatch_metric_alarm" "disk_queue_depth_too_high" {
   namespace           = "AWS/RDS"
   period              = "600"
   statistic           = "Average"
-  threshold           = "${local.thresholds["DiskQueueDepthThreshold"]}"
+  threshold           = local.thresholds["DiskQueueDepthThreshold"]
   alarm_description   = "Average database disk queue depth over last 10 minutes too high, performance may suffer"
   alarm_actions       = ["${aws_sns_topic.default.arn}"]
   ok_actions          = ["${aws_sns_topic.default.arn}"]
@@ -127,13 +123,12 @@ resource "aws_cloudwatch_metric_alarm" "disk_queue_depth_too_high" {
 }
 
 module "freeable_memory_label" {
-  source      = "git::https://github.com/cloudposse/terraform-null-label.git?ref=tags/0.19.2"
-  namespace   = var.namespace
-  name        = "${var.name}-freeable-memory-too-low"
-  stage       = var.stage
-  environment = var.environment
-  delimiter   = var.delimiter
-  attributes  = var.attributes
+  source     = "git::https://github.com/cloudposse/terraform-null-label.git?ref=tags/0.19.2"
+  namespace  = var.namespace
+  name       = "${var.name}-freeable-memory-too-low"
+  stage      = var.stage
+  delimiter  = var.delimiter
+  attributes = var.attributes
 }
 
 resource "aws_cloudwatch_metric_alarm" "freeable_memory_too_low" {
@@ -144,7 +139,7 @@ resource "aws_cloudwatch_metric_alarm" "freeable_memory_too_low" {
   namespace           = "AWS/RDS"
   period              = "600"
   statistic           = "Average"
-  threshold           = "${local.thresholds["FreeableMemoryThreshold"]}"
+  threshold           = local.thresholds["FreeableMemoryThreshold"]
   alarm_description   = "Average database freeable memory over last 10 minutes too low, performance may suffer"
   alarm_actions       = ["${aws_sns_topic.default.arn}"]
   ok_actions          = ["${aws_sns_topic.default.arn}"]
@@ -156,13 +151,12 @@ resource "aws_cloudwatch_metric_alarm" "freeable_memory_too_low" {
 }
 
 module "free_storage_label" {
-  source      = "git::https://github.com/cloudposse/terraform-null-label.git?ref=tags/0.19.2"
-  namespace   = var.namespace
-  name        = "${var.name}-free-storage-space-threshold"
-  stage       = var.stage
-  environment = var.environment
-  delimiter   = var.delimiter
-  attributes  = var.attributes
+  source     = "git::https://github.com/cloudposse/terraform-null-label.git?ref=tags/0.19.2"
+  namespace  = var.namespace
+  name       = "${var.name}-free-storage-space-threshold"
+  stage      = var.stage
+  delimiter  = var.delimiter
+  attributes = var.attributes
 }
 
 resource "aws_cloudwatch_metric_alarm" "free_storage_space_too_low" {
@@ -173,7 +167,7 @@ resource "aws_cloudwatch_metric_alarm" "free_storage_space_too_low" {
   namespace           = "AWS/RDS"
   period              = "600"
   statistic           = "Average"
-  threshold           = "${local.thresholds["FreeStorageSpaceThreshold"]}"
+  threshold           = local.thresholds["FreeStorageSpaceThreshold"]
   alarm_description   = "Average database free storage space over last 10 minutes too low"
   alarm_actions       = ["${aws_sns_topic.default.arn}"]
   ok_actions          = ["${aws_sns_topic.default.arn}"]
@@ -185,13 +179,12 @@ resource "aws_cloudwatch_metric_alarm" "free_storage_space_too_low" {
 }
 
 module "swap_usage_label" {
-  source      = "git::https://github.com/cloudposse/terraform-null-label.git?ref=tags/0.19.2"
-  namespace   = var.namespace
-  name        = "${var.name}-swap-usage-too-high"
-  stage       = var.stage
-  environment = var.environment
-  delimiter   = var.delimiter
-  attributes  = var.attributes
+  source     = "git::https://github.com/cloudposse/terraform-null-label.git?ref=tags/0.19.2"
+  namespace  = var.namespace
+  name       = "${var.name}-swap-usage-too-high"
+  stage      = var.stage
+  delimiter  = var.delimiter
+  attributes = var.attributes
 }
 
 resource "aws_cloudwatch_metric_alarm" "swap_usage_too_high" {
@@ -202,7 +195,7 @@ resource "aws_cloudwatch_metric_alarm" "swap_usage_too_high" {
   namespace           = "AWS/RDS"
   period              = "600"
   statistic           = "Average"
-  threshold           = "${local.thresholds["SwapUsageThreshold"]}"
+  threshold           = local.thresholds["SwapUsageThreshold"]
   alarm_description   = "Average database swap usage over last 10 minutes too high, performance may suffer"
   alarm_actions       = ["${aws_sns_topic.default.arn}"]
   ok_actions          = ["${aws_sns_topic.default.arn}"]
