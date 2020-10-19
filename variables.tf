@@ -3,6 +3,12 @@ variable "db_instance_ids" {
   type        = list(string)
 }
 
+variable "db_master_ids" {
+  description = "The instance IDs of the RDS database master instances that you want to monitor."
+  type        = list(string)
+  default     = []
+}
+
 variable "aws_sns_topic_arn" {
   description = "The bla of the SNS topic you want to use for alerting"
   type        = string
