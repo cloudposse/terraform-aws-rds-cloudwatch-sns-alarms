@@ -14,10 +14,10 @@ resource "aws_sns_topic" "default" {
 
 resource "aws_db_event_subscription" "default" {
   name_prefix = "rds-event-sub"
-  sns_topic   = "${aws_sns_topic.default.arn}"
+  sns_topic   = aws_sns_topic.default.arn
 
   source_type = "db-instance"
-  source_ids  = ["${var.db_instance_id}"]
+  source_ids  = [var.db_instance_id]
 
   event_categories = [
     "failover",
@@ -28,12 +28,12 @@ resource "aws_db_event_subscription" "default" {
     "recovery",
   ]
 
-  depends_on = ["aws_sns_topic_policy.default"]
+  depends_on = [aws_sns_topic_policy.default]
 }
 
 resource "aws_sns_topic_policy" "default" {
-  arn    = "${aws_sns_topic.default.arn}"
-  policy = "${data.aws_iam_policy_document.sns_topic_policy.json}"
+  arn    = aws_sns_topic.default.arn
+  policy = data.aws_iam_policy_document.sns_topic_policy.json
 }
 
 data "aws_iam_policy_document" "sns_topic_policy" {
@@ -55,7 +55,7 @@ data "aws_iam_policy_document" "sns_topic_policy" {
     ]
 
     effect    = "Allow"
-    resources = ["${aws_sns_topic.default.arn}"]
+    resources = [aws_sns_topic.default.arn]
 
     principals {
       type        = "AWS"
