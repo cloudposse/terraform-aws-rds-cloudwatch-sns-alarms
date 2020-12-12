@@ -78,6 +78,10 @@ module "rds_alarms" {
 
 | Name | Description | Type | Default | Required |
 |------|-------------|:----:|:-----:|:-----:|
+| db_instance_id | The instance ID of the RDS database instance that you want to monitor. |  string | "" | no |
+| db_cluster_id | string | The cluster ID of the RDS database instance that you want to monitor. | string | "" | no |
+| db_cluster_event_categories | Cluster event categories to subscribe. | list(string) | ["failover"] | no |
+| db_instance_event_categories | Instance event categories to subscribe to. | list(string) | ["failover", "failure", "low storage", "maintenance", "notification", "recovery"] | no |
 | burst_balance_threshold | The minimum percent of General Purpose SSD (gp2) burst-bucket I/O credits available. | string | `20` | no |
 | cpu_credit_balance_threshold | The minimum number of CPU credits (t2 instances only) available. | string | `20` | no |
 | cpu_utilization_threshold | The maximum percentage of CPU utilization. | string | `80` | no |
@@ -86,6 +90,9 @@ module "rds_alarms" {
 | free_storage_space_threshold | The minimum amount of available storage space in Byte. | string | `2000000000` | no |
 | freeable_memory_threshold | The minimum amount of available random access memory in Byte. | string | `64000000` | no |
 | swap_usage_threshold | The maximum amount of swap space used on the DB instance in Byte. | string | `256000000` | no |
+
+
+
 
 ## Outputs
 
@@ -168,7 +175,7 @@ In general, PRs are welcome. We follow the typical "fork-and-pull" Git workflow.
 
 ## Copyright
 
-Copyright © 2017-2018 [Cloud Posse, LLC](https://cloudposse.com)
+Copyright © 2017-2021 [Cloud Posse, LLC](https://cloudposse.com)
 
 
 

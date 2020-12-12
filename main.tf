@@ -5,35 +5,38 @@
 #   depends_on = ["aws_cloudwatch_event_rule.default"]
 #   input      = "${var.sns_message_override}"
 # }
+
+locals {
+  source_type = var.db_instance_id != "" ? "db-instance" : "db-cluster"
+  source_id   = coalesce(var.db_instance_id, var.db_cluster_id)
+
+  event_categories_map = {
+    "db-instance" = var.db_instance_event_categories
+    "db-cluster"  = var.db_cluster_event_categories
+  }
+  event_categories = local.event_categories_map[local.source_type]
+}
+
 data "aws_caller_identity" "default" {}
 
 # Make a topic
 resource "aws_sns_topic" "default" {
-  name_prefix = "rds-threshold-alerts"
+  name_prefix = var.sns_topic_name_prefix
 }
 
 resource "aws_db_event_subscription" "default" {
-  name_prefix = "rds-event-sub"
-  sns_topic   = "${aws_sns_topic.default.arn}"
+  name_prefix      = var.db_event_subscription_prefix_name
+  sns_topic        = aws_sns_topic.default.arn
+  source_type      = local.source_type
+  source_ids       = [local.source_id]
+  event_categories = local.event_categories
 
-  source_type = "db-instance"
-  source_ids  = ["${var.db_instance_id}"]
-
-  event_categories = [
-    "failover",
-    "failure",
-    "low storage",
-    "maintenance",
-    "notification",
-    "recovery",
-  ]
-
-  depends_on = ["aws_sns_topic_policy.default"]
+  depends_on = [aws_sns_topic_policy.default]
 }
 
 resource "aws_sns_topic_policy" "default" {
-  arn    = "${aws_sns_topic.default.arn}"
-  policy = "${data.aws_iam_policy_document.sns_topic_policy.json}"
+  arn    = aws_sns_topic.default.arn
+  policy = data.aws_iam_policy_document.sns_topic_policy.json
 }
 
 data "aws_iam_policy_document" "sns_topic_policy" {
@@ -67,7 +70,7 @@ data "aws_iam_policy_document" "sns_topic_policy" {
       variable = "AWS:SourceOwner"
 
       values = [
-        "${data.aws_caller_identity.default.account_id}",
+        data.aws_caller_identity.default.account_id
       ]
     }
   }
@@ -75,7 +78,7 @@ data "aws_iam_policy_document" "sns_topic_policy" {
   statement {
     sid       = "Allow CloudwatchEvents"
     actions   = ["sns:Publish"]
-    resources = ["${aws_sns_topic.default.arn}"]
+    resources = [aws_sns_topic.default.arn]
 
     principals {
       type        = "Service"
