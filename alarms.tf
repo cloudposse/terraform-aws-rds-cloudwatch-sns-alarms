@@ -162,7 +162,7 @@ resource "aws_cloudwatch_metric_alarm" "rapid-free-space-decrease" {
   }
 
   metric_query {
-    id = "m1"
+    id          = "m1"
     return_data = "true"
 
     metric {
