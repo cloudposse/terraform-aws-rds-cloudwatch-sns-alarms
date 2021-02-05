@@ -1,6 +1,6 @@
-variable "sns_topic_name_prefix" {
-  type    = string
-  default = "rds-threshold-alerts"
+variable "sns_topic_arn" {
+  type        = string
+  description = "SNS topic ARN for to send RDS alerts to."
 }
 
 variable "db_event_subscription_prefix_name" {

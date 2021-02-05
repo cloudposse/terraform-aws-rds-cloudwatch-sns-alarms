@@ -29,13 +29,19 @@ resource "aws_db_instance" "default" {
   skip_final_snapshot  = "true"
 }
 
+resource "aws_sns_topic" "default" {
+  name = "prod-slack-alerts"
+  tags = module.this.context.tags
+}
+
 module "rds_alarms" {
   source         = "../../"
   db_instance_id = "${aws_db_instance.default.id}"
+  sns_topic_arn  = aws_sns_topic.default.arn
 }
 
 output "rds_alarms_sns_topic_arn" {
-  value = "${module.rds_alarms.sns_topic_arn}"
+  value = aws_sns_topic.default.arn
 }
 
 output "rds_arn" {

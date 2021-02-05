@@ -19,14 +19,9 @@ locals {
 
 data "aws_caller_identity" "default" {}
 
-# Make a topic
-resource "aws_sns_topic" "default" {
-  name_prefix = var.sns_topic_name_prefix
-}
-
 resource "aws_db_event_subscription" "default" {
   name_prefix      = var.db_event_subscription_prefix_name
-  sns_topic        = aws_sns_topic.default.arn
+  sns_topic        = var.sns_topic_arn
   source_type      = local.source_type
   source_ids       = [local.source_id]
   event_categories = local.event_categories
@@ -35,7 +30,7 @@ resource "aws_db_event_subscription" "default" {
 }
 
 resource "aws_sns_topic_policy" "default" {
-  arn    = aws_sns_topic.default.arn
+  arn    = var.sns_topic_arn
   policy = data.aws_iam_policy_document.sns_topic_policy.json
 }
 
@@ -58,7 +53,7 @@ data "aws_iam_policy_document" "sns_topic_policy" {
     ]
 
     effect    = "Allow"
-    resources = [aws_sns_topic.default.arn]
+    resources = [var.sns_topic_arn]
 
     principals {
       type        = "AWS"
@@ -78,7 +73,7 @@ data "aws_iam_policy_document" "sns_topic_policy" {
   statement {
     sid       = "Allow CloudwatchEvents"
     actions   = ["sns:Publish"]
-    resources = [aws_sns_topic.default.arn]
+    resources = [var.sns_topic_arn]
 
     principals {
       type        = "Service"
@@ -89,7 +84,7 @@ data "aws_iam_policy_document" "sns_topic_policy" {
   statement {
     sid       = "Allow RDS Event Notification"
     actions   = ["sns:Publish"]
-    resources = [aws_sns_topic.default.arn]
+    resources = [var.sns_topic_arn]
 
     principals {
       type        = "Service"

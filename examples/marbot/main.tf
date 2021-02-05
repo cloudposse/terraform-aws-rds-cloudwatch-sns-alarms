@@ -46,7 +46,13 @@ resource "aws_db_instance" "default" {
   skip_final_snapshot  = "true"
 }
 
+resource "aws_sns_topic" "default" {
+  name = "prod-slack-alerts"
+  tags = module.this.context.tags
+}
+
 module "rds_alarms" {
   source         = "github::https://github.com/bitflight-public/terraform-aws-rds-alerts.git?ref=master"
   db_instance_id = "${aws_db_instance.default.id}"
+  sns_topic_arn  = aws_sns_topic.default.arn
 }
