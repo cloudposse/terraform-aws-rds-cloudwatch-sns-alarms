@@ -110,6 +110,7 @@ resource "aws_cloudwatch_metric_alarm" "free_storage_space_too_low" {
   alarm_name          = "${var.name_prefix}${var.db_instance_ids[count.index]}-free_storage_space_threshold"
   comparison_operator = "LessThanThreshold"
   evaluation_periods  = var.evaluation_periods
+  datapoints_to_alarm = var.datapoints_to_alarm
   metric_name         = "FreeStorageSpace"
   namespace           = "AWS/RDS"
   period              = var.period

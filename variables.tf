@@ -26,6 +26,12 @@ variable "period" {
   default     = "600"
 }
 
+variable "datapoints_to_alarm" {
+  description = "The number of datapoints that must be breaching to trigger the alarm."
+  type        = string
+  default     = "1"
+}
+
 variable "evaluation_periods" {
   description = "The number of periods over which data is compared to the specified threshold."
   type        = string
