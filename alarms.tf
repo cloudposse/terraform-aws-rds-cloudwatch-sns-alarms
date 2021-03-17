@@ -1,4 +1,5 @@
 locals {
+  db_instance_ids = length(var.db_instance_ids)
   thresholds = {
     BurstBalanceThreshold     = min(max(var.burst_balance_threshold, 0), 100)
     CPUUtilizationThreshold   = min(max(var.cpu_utilization_threshold, 0), 100)
@@ -11,7 +12,7 @@ locals {
 }
 
 resource "aws_cloudwatch_metric_alarm" "burst_balance_too_low" {
-  count               = length(var.db_instance_ids)
+  count               = local.db_instance_ids
   alarm_name          = "${var.name_prefix}${var.db_instance_ids[count.index]}-burst_balance_too_low"
   comparison_operator = "LessThanThreshold"
   evaluation_periods  = var.evaluation_periods
@@ -30,7 +31,7 @@ resource "aws_cloudwatch_metric_alarm" "burst_balance_too_low" {
 }
 
 resource "aws_cloudwatch_metric_alarm" "cpu_utilization_too_high" {
-  count               = length(var.db_instance_ids)
+  count               = local.db_instance_ids
   alarm_name          = "${var.name_prefix}${var.db_instance_ids[count.index]}-cpu_utilization_too_high"
   comparison_operator = "GreaterThanThreshold"
   evaluation_periods  = var.evaluation_periods
@@ -49,7 +50,7 @@ resource "aws_cloudwatch_metric_alarm" "cpu_utilization_too_high" {
 }
 
 resource "aws_cloudwatch_metric_alarm" "cpu_credit_balance_too_low" {
-  count               = length(var.db_instance_ids)
+  count               = local.db_instance_ids
   alarm_name          = "${var.name_prefix}${var.db_instance_ids[count.index]}-cpu_credit_balance_too_low"
   comparison_operator = "LessThanThreshold"
   evaluation_periods  = var.evaluation_periods
@@ -68,7 +69,7 @@ resource "aws_cloudwatch_metric_alarm" "cpu_credit_balance_too_low" {
 }
 
 resource "aws_cloudwatch_metric_alarm" "disk_queue_depth_too_high" {
-  count               = length(var.db_instance_ids)
+  count               = local.db_instance_ids
   alarm_name          = "${var.name_prefix}${var.db_instance_ids[count.index]}-disk_queue_depth_too_high"
   comparison_operator = "GreaterThanThreshold"
   evaluation_periods  = var.evaluation_periods
@@ -87,7 +88,7 @@ resource "aws_cloudwatch_metric_alarm" "disk_queue_depth_too_high" {
 }
 
 resource "aws_cloudwatch_metric_alarm" "freeable_memory_too_low" {
-  count               = length(var.db_instance_ids)
+  count               = local.db_instance_ids
   alarm_name          = "${var.name_prefix}${var.db_instance_ids[count.index]}-freeable_memory_too_low"
   comparison_operator = "LessThanThreshold"
   evaluation_periods  = var.evaluation_periods
@@ -106,7 +107,7 @@ resource "aws_cloudwatch_metric_alarm" "freeable_memory_too_low" {
 }
 
 resource "aws_cloudwatch_metric_alarm" "free_storage_space_too_low" {
-  count               = length(var.db_instance_ids)
+  count               = local.db_instance_ids
   alarm_name          = "${var.name_prefix}${var.db_instance_ids[count.index]}-free_storage_space_threshold"
   comparison_operator = "LessThanThreshold"
   evaluation_periods  = var.evaluation_periods
@@ -126,7 +127,7 @@ resource "aws_cloudwatch_metric_alarm" "free_storage_space_too_low" {
 }
 
 resource "aws_cloudwatch_metric_alarm" "swap_usage_too_high" {
-  count               = length(var.db_instance_ids)
+  count               = local.db_instance_ids
   alarm_name          = "${var.name_prefix}${var.db_instance_ids[count.index]}-swap_usage_too_high"
   comparison_operator = "GreaterThanThreshold"
   evaluation_periods  = var.evaluation_periods
