@@ -44,7 +44,7 @@ resource "aws_cloudwatch_metric_alarm" "cpu_utilization_too_high" {
   ok_actions          = [var.aws_sns_topic_arn]
 
   dimensions = {
-    DBInstanceIdentifier = veach.value
+    DBInstanceIdentifier = each.value
   }
 }
 
@@ -63,7 +63,7 @@ resource "aws_cloudwatch_metric_alarm" "cpu_credit_balance_too_low" {
   ok_actions          = [var.aws_sns_topic_arn]
 
   dimensions = {
-    DBInstanceIdentifier = veach.value
+    DBInstanceIdentifier = each.value
   }
 }
 
@@ -82,7 +82,7 @@ resource "aws_cloudwatch_metric_alarm" "disk_queue_depth_too_high" {
   ok_actions          = [var.aws_sns_topic_arn]
 
   dimensions = {
-    DBInstanceIdentifier = veach.value
+    DBInstanceIdentifier = each.value
   }
 }
 
@@ -101,7 +101,7 @@ resource "aws_cloudwatch_metric_alarm" "freeable_memory_too_low" {
   ok_actions          = [var.aws_sns_topic_arn]
 
   dimensions = {
-    DBInstanceIdentifier = veach.value
+    DBInstanceIdentifier = each.value
   }
 }
 
@@ -121,7 +121,7 @@ resource "aws_cloudwatch_metric_alarm" "free_storage_space_too_low" {
   ok_actions          = [var.aws_sns_topic_arn]
 
   dimensions = {
-    DBInstanceIdentifier = veach.value
+    DBInstanceIdentifier = each.value
   }
 }
 
@@ -140,13 +140,13 @@ resource "aws_cloudwatch_metric_alarm" "swap_usage_too_high" {
   ok_actions          = [var.aws_sns_topic_arn]
 
   dimensions = {
-    DBInstanceIdentifier = veach.value
+    DBInstanceIdentifier = each.value
   }
 }
 
 resource "aws_cloudwatch_metric_alarm" "rapid-free-space-decrease" {
-  for_each                  = var.db_instance_ids
-  alarm_name                = "${var.name_prefix}${var.db_master_ids[count.index]}-rapid-free-space-decrease"
+  for_each                  = var.db_master_ids
+  alarm_name                = "${var.name_prefix}${each.value}-rapid-free-space-decrease"
   comparison_operator       = "LessThanLowerThreshold"
   evaluation_periods        = "2"
   threshold_metric_id       = "e1"
@@ -173,7 +173,7 @@ resource "aws_cloudwatch_metric_alarm" "rapid-free-space-decrease" {
       stat        = "Average"
 
       dimensions = {
-        DBInstanceIdentifier = var.db_master_ids[count.index]
+        DBInstanceIdentifier = each.value
       }
     }
   }
