@@ -25,7 +25,7 @@ resource "aws_cloudwatch_metric_alarm" "burst_balance_too_low" {
   ok_actions          = [var.aws_sns_topic_arn]
 
   dimensions = {
-    DBInstanceIdentifier = each.name
+    DBInstanceIdentifier = each.value
   }
 }
 
