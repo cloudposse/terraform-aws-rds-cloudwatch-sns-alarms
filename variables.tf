@@ -1,11 +1,11 @@
 variable "db_instance_ids" {
   description = "The instance IDs of the RDS database instances that you want to monitor."
-  type        = list(string)
+  type        = set(string)
 }
 
 variable "db_master_ids" {
   description = "The instance IDs of the RDS database master instances that you want to monitor."
-  type        = list(string)
+  type        = set(string)
   default     = []
 }
 
