@@ -1,32 +1,13 @@
-variable "marbot_endpoint_id" {
-  default = ""
-}
-
 locals {
   marbot_endpoint = {
-    endpoint_id = "${var.marbot_endpoint_id}"
+    endpoint_id = var.marbot_endpoint_id
     stage       = "v1"
   }
 }
 
-variable "region" {
-  default = "eu-west-2"
-}
-
-provider "aws" {
-  region = "${var.region}"
-
-  # Make it faster by skipping something
-  skip_get_ec2_platforms      = true
-  skip_metadata_api_check     = true
-  skip_region_validation      = true
-  skip_credentials_validation = true
-  skip_requesting_account_id  = true
-}
-
 resource "aws_sns_topic_subscription" "subscribe_marbot" {
-  count     = "${var.marbot_endpoint_id != "" ? 1 : 0}"
-  topic_arn = "${module.rds_alarms.sns_topic_arn}"
+  count     = var.marbot_endpoint_id != "" ? 1 : 0
+  topic_arn = module.rds_alarms.sns_topic_arn
   protocol  = "https"
   endpoint  = "https://api.marbot.io/${local.marbot_endpoint["Stage"]}/endpoint/${local.marbot_endpoint["EndpointId"]}"
 }
@@ -48,5 +29,5 @@ resource "aws_db_instance" "default" {
 
 module "rds_alarms" {
   source         = "github::https://github.com/bitflight-public/terraform-aws-rds-alerts.git?ref=master"
-  db_instance_id = "${aws_db_instance.default.id}"
+  db_instance_id = aws_db_instance.default.id
 }
