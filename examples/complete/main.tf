@@ -18,5 +18,3 @@ module "rds_alarms" {
   db_instance_id = aws_db_instance.default.id
   context        = module.this.context
 }
-
-
