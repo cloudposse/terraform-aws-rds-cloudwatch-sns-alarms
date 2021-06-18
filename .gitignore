@@ -1,11 +1,20 @@
-# Compiled files
-**/*.tfstate
-**/*.tfstate.backup
-**/*.terraform.tfstate*
-# Module directory
-.idea
-*.iml
-**/.terraform
+#  Local .terraform directories
+**/.terraform/*
 
-build-harness
-.build-harness
+# .tfstate files
+*.tfstate
+*.tfstate.*
+.terraform
+.terraform.tfstate.lock.info
+**/.terraform.lock.hcl
+
+**/.idea
+**/*.iml
+
+# Cloud Posse Build Harness https://github.com/cloudposse/build-harness
+**/.build-harness
+**/build-harness
+
+# Crash log files
+crash.log
+test.log
