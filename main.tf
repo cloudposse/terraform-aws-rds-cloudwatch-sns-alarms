@@ -1,13 +1,34 @@
-data "aws_caller_identity" "default" {}
+data "aws_caller_identity" "default" {
+  count = module.this.enabled ? 1 : 0
+}
 
-# Make a topic
+module "topic_label" {
+  source  = "cloudposse/label/null"
+  version = "0.24.1"
+
+  attributes = ["rds", "threshold", "alerts"]
+
+  context = module.this.context
+}
+
 resource "aws_sns_topic" "default" {
-  name_prefix = "rds-threshold-alerts"
+  count = module.this.enabled ? 1 : 0
+  name  = module.topic_label.id
+}
+
+module "subscription_label" {
+  source  = "cloudposse/label/null"
+  version = "0.24.1"
+
+  attributes = ["rds", "event", "sub"]
+
+  context = module.this.context
 }
 
 resource "aws_db_event_subscription" "default" {
-  name_prefix = "rds-event-sub"
-  sns_topic   = aws_sns_topic.default.arn
+  count     = module.this.enabled ? 1 : 0
+  name      = module.subscription_label.id
+  sns_topic = join("", aws_sns_topic.default.*.arn)
 
   source_type = "db-instance"
   source_ids  = [var.db_instance_id]
@@ -21,19 +42,22 @@ resource "aws_db_event_subscription" "default" {
     "recovery",
   ]
 
-  depends_on = ["aws_sns_topic_policy.default"]
+  depends_on = [
+    aws_sns_topic_policy.default
+  ]
 }
 
 resource "aws_sns_topic_policy" "default" {
-  arn    = aws_sns_topic.default.arn
-  policy = data.aws_iam_policy_document.sns_topic_policy.json
+  count  = module.this.enabled ? 1 : 0
+  arn    = join("", aws_sns_topic.default.*.arn)
+  policy = join("", data.aws_iam_policy_document.sns_topic_policy.*.json)
 }
 
 data "aws_iam_policy_document" "sns_topic_policy" {
-  policy_id = "__default_policy_ID"
+  count = module.this.enabled ? 1 : 0
 
   statement {
-    sid = "__default_statement_ID"
+    sid = "AllowManageSNS"
 
     actions = [
       "SNS:Subscribe",
@@ -48,7 +72,7 @@ data "aws_iam_policy_document" "sns_topic_policy" {
     ]
 
     effect    = "Allow"
-    resources = [aws_sns_topic.default.arn]
+    resources = aws_sns_topic.default.*.arn
 
     principals {
       type        = "AWS"
@@ -59,16 +83,15 @@ data "aws_iam_policy_document" "sns_topic_policy" {
       test     = "StringEquals"
       variable = "AWS:SourceOwner"
 
-      values = [
-        data.aws_caller_identity.default.account_id,
-      ]
+      values = data.aws_caller_identity.default.*.account_id
+
     }
   }
 
   statement {
     sid       = "Allow CloudwatchEvents"
     actions   = ["sns:Publish"]
-    resources = [aws_sns_topic.default.arn]
+    resources = aws_sns_topic.default.*.arn
 
     principals {
       type        = "Service"
@@ -79,7 +102,7 @@ data "aws_iam_policy_document" "sns_topic_policy" {
   statement {
     sid       = "Allow RDS Event Notification"
     actions   = ["sns:Publish"]
-    resources = [aws_sns_topic.default.arn]
+    resources = aws_sns_topic.default.*.arn
 
     principals {
       type        = "Service"
