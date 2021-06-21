@@ -1,3 +1,7 @@
+provider "aws" {
+  region = var.region
+}
+
 resource "aws_db_instance" "default" {
   allocated_storage    = 10
   storage_type         = "gp2"
