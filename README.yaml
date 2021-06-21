@@ -101,9 +101,11 @@ related:
 
 # Contributors to this project
 contributors:
-  - name:   "Jamie Nelson"
+  - name: "Jamie Nelson"
     github: "Jamie-BitFlight"
-  - name:   "Erik Osterman"
+  - name: "Erik Osterman"
     github: "osterman"
-  - name:   "Daniel Patriche"
-    github: "rebelthor"
+  - name: "Pavels Veretennikovs"
+    github: "rfvermut"
+  - name: "Joe Niland"
+    github: "joe-niland"
