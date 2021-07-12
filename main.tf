@@ -11,8 +11,13 @@ module "topic_label" {
   context = module.this.context
 }
 
+locals {
+  create_sns_topic  = var.aws_sns_topic_arn == ""
+  aws_sns_topic_arn = local.create_sns_topic ? aws_sns_topic.default.*.arn : [var.aws_sns_topic_arn]
+}
+
 resource "aws_sns_topic" "default" {
-  count = module.this.enabled ? 1 : 0
+  count = module.this.enabled && local.create_sns_topic ? 1 : 0
   name  = module.topic_label.id
 }
 
@@ -28,7 +33,7 @@ module "subscription_label" {
 resource "aws_db_event_subscription" "default" {
   count     = module.this.enabled ? 1 : 0
   name      = module.subscription_label.id
-  sns_topic = join("", aws_sns_topic.default.*.arn)
+  sns_topic = join("", local.aws_sns_topic_arn)
 
   source_type = "db-instance"
   source_ids  = [var.db_instance_id]
@@ -43,18 +48,18 @@ resource "aws_db_event_subscription" "default" {
   ]
 
   depends_on = [
-    aws_sns_topic_policy.default
+    local.aws_sns_topic_arn
   ]
 }
 
 resource "aws_sns_topic_policy" "default" {
-  count  = module.this.enabled ? 1 : 0
+  count  = module.this.enabled && local.create_sns_topic ? 1 : 0
   arn    = join("", aws_sns_topic.default.*.arn)
   policy = join("", data.aws_iam_policy_document.sns_topic_policy.*.json)
 }
 
 data "aws_iam_policy_document" "sns_topic_policy" {
-  count = module.this.enabled ? 1 : 0
+  count = module.this.enabled && local.create_sns_topic ? 1 : 0
 
   statement {
     sid = "AllowManageSNS"
