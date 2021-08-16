@@ -26,9 +26,9 @@ module "subscription_label" {
 }
 
 resource "aws_db_event_subscription" "default" {
-  count     = module.this.enabled ? 1 : 0
-  name      = module.subscription_label.id
-  sns_topic = join("", aws_sns_topic.default.*.arn)
+  count       = module.this.enabled ? 1 : 0
+  name_prefix = module.subscription_label.id
+  sns_topic   = join("", aws_sns_topic.default.*.arn)
 
   source_type = "db-instance"
   source_ids  = [var.db_instance_id]
