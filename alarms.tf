@@ -12,56 +12,56 @@ locals {
 
 module "label" {
   source  = "cloudposse/label/null"
-  version = "0.24.1"
+  version = "0.25.0"
   name    = coalesce(module.this.name, var.db_instance_id)
   context = module.this.context
 }
 
 module "burst_balance_too_low_label" {
   source     = "cloudposse/label/null"
-  version    = "0.24.1"
+  version    = "0.25.0"
   attributes = ["burst_balance_too_low"]
   context    = module.label.context
 }
 
 module "cpu_utilization_too_high_label" {
   source     = "cloudposse/label/null"
-  version    = "0.24.1"
+  version    = "0.25.0"
   attributes = ["cpu_utilization_too_high"]
   context    = module.label.context
 }
 
 module "cpu_credit_balance_too_low_label" {
   source     = "cloudposse/label/null"
-  version    = "0.24.1"
+  version    = "0.25.0"
   attributes = ["cpu_credit_balance_too_low"]
   context    = module.label.context
 }
 
 module "disk_queue_depth_too_high_label" {
   source     = "cloudposse/label/null"
-  version    = "0.24.1"
+  version    = "0.25.0"
   attributes = ["disk_queue_depth_too_high"]
   context    = module.label.context
 }
 
 module "freeable_memory_too_low_label" {
   source     = "cloudposse/label/null"
-  version    = "0.24.1"
+  version    = "0.25.0"
   attributes = ["freeable_memory_too_low"]
   context    = module.label.context
 }
 
 module "free_storage_space_threshold_label" {
   source     = "cloudposse/label/null"
-  version    = "0.24.1"
+  version    = "0.25.0"
   attributes = ["free_storage_space_threshold"]
   context    = module.label.context
 }
 
 module "swap_usage_too_high_label" {
   source     = "cloudposse/label/null"
-  version    = "0.24.1"
+  version    = "0.25.0"
   attributes = ["swap_usage_too_high"]
   context    = module.label.context
 }

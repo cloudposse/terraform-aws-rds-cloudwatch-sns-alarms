@@ -4,7 +4,7 @@ data "aws_caller_identity" "default" {
 
 module "topic_label" {
   source  = "cloudposse/label/null"
-  version = "0.24.1"
+  version = "0.25.0"
 
   attributes = ["rds", "threshold", "alerts"]
 
@@ -18,7 +18,7 @@ resource "aws_sns_topic" "default" {
 
 module "subscription_label" {
   source  = "cloudposse/label/null"
-  version = "0.24.1"
+  version = "0.25.0"
 
   attributes = ["rds", "event", "sub"]
 
