@@ -5,7 +5,7 @@ BATS_ARGS ?= --tap
 BATS_LOG ?= test.log
 
 # Define a macro to run the tests
-define RUN_TESTS 
+define RUN_TESTS
 @echo "Running tests in $(1)"
 @cd $(1) && bats $(BATS_ARGS) $(addsuffix .bats,$(addprefix $(TEST_HARNESS_PATH)/test/terraform/,$(TESTS)))
 endef
@@ -28,7 +28,7 @@ deps::
 ## Clean up the test harness
 clean:
 	[ "$(TEST_HARNESS_PATH)" == "/" ] || rm -rf $(TEST_HARNESS_PATH)
-  
+ 
 ## Run all tests
 all: module examples/complete
 
