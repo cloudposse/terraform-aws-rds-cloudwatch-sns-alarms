@@ -1,0 +1,4 @@
+make: Entering directory `/Users/joe/git-proj/cloudposse/terraform-aws-rds-cloudwatch-sns-alarms'
+curl --retry 5 --fail --silent --retry-delay 1 https://raw.githubusercontent.com/cloudposse/build-harness/master/bin/install.sh | bash -s "cloudposse" "build-harness" "master"
+make: Leaving directory `/Users/joe/git-proj/cloudposse/terraform-aws-rds-cloudwatch-sns-alarms'
+ 
