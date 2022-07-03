@@ -158,15 +158,8 @@ module "rds_alarms" {
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_burst_balance_too_low_label"></a> [burst\_balance\_too\_low\_label](#module\_burst\_balance\_too\_low\_label) | cloudposse/label/null | 0.25.0 |
-| <a name="module_cpu_credit_balance_too_low_label"></a> [cpu\_credit\_balance\_too\_low\_label](#module\_cpu\_credit\_balance\_too\_low\_label) | cloudposse/label/null | 0.25.0 |
-| <a name="module_cpu_utilization_too_high_label"></a> [cpu\_utilization\_too\_high\_label](#module\_cpu\_utilization\_too\_high\_label) | cloudposse/label/null | 0.25.0 |
-| <a name="module_disk_queue_depth_too_high_label"></a> [disk\_queue\_depth\_too\_high\_label](#module\_disk\_queue\_depth\_too\_high\_label) | cloudposse/label/null | 0.25.0 |
-| <a name="module_free_storage_space_threshold_label"></a> [free\_storage\_space\_threshold\_label](#module\_free\_storage\_space\_threshold\_label) | cloudposse/label/null | 0.25.0 |
-| <a name="module_freeable_memory_too_low_label"></a> [freeable\_memory\_too\_low\_label](#module\_freeable\_memory\_too\_low\_label) | cloudposse/label/null | 0.25.0 |
 | <a name="module_label"></a> [label](#module\_label) | cloudposse/label/null | 0.25.0 |
 | <a name="module_subscription_label"></a> [subscription\_label](#module\_subscription\_label) | cloudposse/label/null | 0.25.0 |
-| <a name="module_swap_usage_too_high_label"></a> [swap\_usage\_too\_high\_label](#module\_swap\_usage\_too\_high\_label) | cloudposse/label/null | 0.25.0 |
 | <a name="module_this"></a> [this](#module\_this) | cloudposse/label/null | 0.25.0 |
 | <a name="module_topic_label"></a> [topic\_label](#module\_topic\_label) | cloudposse/label/null | 0.25.0 |
 
