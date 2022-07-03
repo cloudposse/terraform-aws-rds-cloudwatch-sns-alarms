@@ -2,22 +2,20 @@ package test
 
 import (
 	"fmt"
-	"math/rand"
-	"strconv"
+	"strings"
 	"testing"
 
 	"github.com/gruntwork-io/terratest/modules/aws"
+	"github.com/gruntwork-io/terratest/modules/random"
 	"github.com/gruntwork-io/terratest/modules/terraform"
 	"github.com/stretchr/testify/assert"
-	// "github.com/stretchr/testify/assert"
 )
 
 // Test the Terraform module in examples/complete using Terratest.
 func TestExamplesComplete(t *testing.T) {
 	t.Parallel()
-
-	randId := strconv.Itoa(rand.Intn(100000))
-	attributes := []string{randId}
+	randID := strings.ToLower(random.UniqueId())
+	attributes := []string{randID}
 
 	// name is here more as an example rather than as a useful test input
 	name := "rds-alarms"
@@ -49,9 +47,9 @@ func TestExamplesComplete(t *testing.T) {
 		"eg",
 		"test",
 		name,
-		randId,
+		randID,
 		"rds-threshold-alerts"), snsTopicArn)
 
 	rdsArn := terraform.Output(t, terraformOptions, "rds_arn")
-	assert.Equal(t, fmt.Sprintf("eg-test-rds-alarms-%s", randId), rdsArn)
+	assert.Equal(t, fmt.Sprintf("eg-test-rds-alarms-%s", randID), rdsArn)
 }
