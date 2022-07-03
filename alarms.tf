@@ -8,66 +8,31 @@ locals {
     FreeStorageSpaceThreshold = max(var.free_storage_space_threshold, 0)
     SwapUsageThreshold        = max(var.swap_usage_threshold, 0)
   }
+
+  alarm_names = toset([
+    "burst_balance_too_low",
+    "cpu_utilization_too_high",
+    "cpu_credit_balance_too_low",
+    "disk_queue_depth_too_high",
+    "freeable_memory_too_low",
+    "free_storage_space_threshold",
+    "swap_usage_too_high"
+  ])
 }
 
 module "label" {
-  source  = "cloudposse/label/null"
-  version = "0.25.0"
-  name    = coalesce(module.this.name, var.db_instance_id)
+  source   = "cloudposse/label/null"
+  version  = "0.25.0"
+  for_each = local.alarm_names
+
+  name       = coalesce(module.this.name, var.db_instance_id)
+  attributes = [each.key]
+
   context = module.this.context
 }
 
-module "burst_balance_too_low_label" {
-  source     = "cloudposse/label/null"
-  version    = "0.25.0"
-  attributes = ["burst_balance_too_low"]
-  context    = module.label.context
-}
-
-module "cpu_utilization_too_high_label" {
-  source     = "cloudposse/label/null"
-  version    = "0.25.0"
-  attributes = ["cpu_utilization_too_high"]
-  context    = module.label.context
-}
-
-module "cpu_credit_balance_too_low_label" {
-  source     = "cloudposse/label/null"
-  version    = "0.25.0"
-  attributes = ["cpu_credit_balance_too_low"]
-  context    = module.label.context
-}
-
-module "disk_queue_depth_too_high_label" {
-  source     = "cloudposse/label/null"
-  version    = "0.25.0"
-  attributes = ["disk_queue_depth_too_high"]
-  context    = module.label.context
-}
-
-module "freeable_memory_too_low_label" {
-  source     = "cloudposse/label/null"
-  version    = "0.25.0"
-  attributes = ["freeable_memory_too_low"]
-  context    = module.label.context
-}
-
-module "free_storage_space_threshold_label" {
-  source     = "cloudposse/label/null"
-  version    = "0.25.0"
-  attributes = ["free_storage_space_threshold"]
-  context    = module.label.context
-}
-
-module "swap_usage_too_high_label" {
-  source     = "cloudposse/label/null"
-  version    = "0.25.0"
-  attributes = ["swap_usage_too_high"]
-  context    = module.label.context
-}
-
 resource "aws_cloudwatch_metric_alarm" "burst_balance_too_low" {
-  alarm_name          = module.burst_balance_too_low_label.id
+  alarm_name          = module.label["burst_balance_too_low"].id
   comparison_operator = "LessThanThreshold"
   evaluation_periods  = "1"
   metric_name         = "BurstBalance"
@@ -85,7 +50,7 @@ resource "aws_cloudwatch_metric_alarm" "burst_balance_too_low" {
 }
 
 resource "aws_cloudwatch_metric_alarm" "cpu_utilization_too_high" {
-  alarm_name          = module.cpu_utilization_too_high_label.id
+  alarm_name          = module.label["cpu_utilization_too_high"].id
   comparison_operator = "GreaterThanThreshold"
   evaluation_periods  = "1"
   metric_name         = "CPUUtilization"
@@ -103,7 +68,7 @@ resource "aws_cloudwatch_metric_alarm" "cpu_utilization_too_high" {
 }
 
 resource "aws_cloudwatch_metric_alarm" "cpu_credit_balance_too_low" {
-  alarm_name          = module.cpu_credit_balance_too_low_label.id
+  alarm_name          = module.label["cpu_credit_balance_too_low"].id
   comparison_operator = "LessThanThreshold"
   evaluation_periods  = "1"
   metric_name         = "CPUCreditBalance"
@@ -121,7 +86,7 @@ resource "aws_cloudwatch_metric_alarm" "cpu_credit_balance_too_low" {
 }
 
 resource "aws_cloudwatch_metric_alarm" "disk_queue_depth_too_high" {
-  alarm_name          = module.disk_queue_depth_too_high_label.id
+  alarm_name          = module.label["disk_queue_depth_too_high"].id
   comparison_operator = "GreaterThanThreshold"
   evaluation_periods  = "1"
   metric_name         = "DiskQueueDepth"
@@ -139,7 +104,7 @@ resource "aws_cloudwatch_metric_alarm" "disk_queue_depth_too_high" {
 }
 
 resource "aws_cloudwatch_metric_alarm" "freeable_memory_too_low" {
-  alarm_name          = module.freeable_memory_too_low_label.id
+  alarm_name          = module.label["freeable_memory_too_low"].id
   comparison_operator = "LessThanThreshold"
   evaluation_periods  = "1"
   metric_name         = "FreeableMemory"
@@ -157,7 +122,7 @@ resource "aws_cloudwatch_metric_alarm" "freeable_memory_too_low" {
 }
 
 resource "aws_cloudwatch_metric_alarm" "free_storage_space_too_low" {
-  alarm_name          = module.free_storage_space_threshold_label.id
+  alarm_name          = module.label["free_storage_space_threshold"].id
   comparison_operator = "LessThanThreshold"
   evaluation_periods  = "1"
   metric_name         = "FreeStorageSpace"
@@ -175,7 +140,7 @@ resource "aws_cloudwatch_metric_alarm" "free_storage_space_too_low" {
 }
 
 resource "aws_cloudwatch_metric_alarm" "swap_usage_too_high" {
-  alarm_name          = module.swap_usage_too_high_label.id
+  alarm_name          = module.label["swap_usage_too_high"].id
   comparison_operator = "GreaterThanThreshold"
   evaluation_periods  = "1"
   metric_name         = "SwapUsage"
