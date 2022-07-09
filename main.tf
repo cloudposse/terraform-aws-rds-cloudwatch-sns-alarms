@@ -12,8 +12,8 @@ module "topic_label" {
 }
 
 locals {
-  create_sns_topic  = var.aws_sns_topic_arn == ""
-  aws_sns_topic_arn = local.create_sns_topic ? aws_sns_topic.default.*.arn : [var.aws_sns_topic_arn]
+  create_sns_topic = var.sns_topic_arn == ""
+  sns_topic_arn    = local.create_sns_topic ? aws_sns_topic.default.*.arn : [var.sns_topic_arn]
 }
 
 resource "aws_sns_topic" "default" {
@@ -33,7 +33,7 @@ module "subscription_label" {
 resource "aws_db_event_subscription" "default" {
   count     = module.this.enabled ? 1 : 0
   name      = module.subscription_label.id
-  sns_topic = join("", local.aws_sns_topic_arn)
+  sns_topic = join("", local.sns_topic_arn)
 
   source_type = "db-instance"
   source_ids  = [var.db_instance_id]
@@ -48,7 +48,7 @@ resource "aws_db_event_subscription" "default" {
   ]
 
   depends_on = [
-    local.aws_sns_topic_arn
+    local.sns_topic_arn
   ]
 }
 
