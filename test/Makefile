@@ -28,7 +28,7 @@ deps::
 ## Clean up the test harness
 clean:
 	[ "$(TEST_HARNESS_PATH)" == "/" ] || rm -rf $(TEST_HARNESS_PATH)
-
+ 
 ## Run all tests
 all: module examples/complete
 
