@@ -17,6 +17,7 @@ locals {
     "disk_queue_depth_too_high",
     "freeable_memory_too_low",
     "free_storage_space_threshold",
+    "oldest_replication_too_high",
     "swap_usage_too_high"
   ])
 }
@@ -141,7 +142,7 @@ resource "aws_cloudwatch_metric_alarm" "free_storage_space_too_low" {
 }
 
 resource "aws_cloudwatch_metric_alarm" "oldest_replication_too_high" {
-  alarm_name          = "oldest_replication_too_high"
+  alarm_name          = module.label["oldest_replication_too_high"].id
   comparison_operator = "GreaterThanThreshold"
   evaluation_periods  = "1"
   metric_name         = "OldestReplicationSlotLag"
@@ -150,8 +151,8 @@ resource "aws_cloudwatch_metric_alarm" "oldest_replication_too_high" {
   statistic           = "Average"
   threshold           = local.thresholds["OldestReplicationThreshold"]
   alarm_description   = "Average database replication lag over last 10 minutes too high, disk may fill"
-  alarm_actions       = [aws_sns_topic.default.arn]
-  ok_actions          = [aws_sns_topic.default.arn]
+  alarm_actions       = aws_sns_topic.default.*.arn
+  ok_actions          = aws_sns_topic.default.*.arn
 
   dimensions = {
     DBInstanceIdentifier = var.db_instance_id
