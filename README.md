@@ -132,8 +132,10 @@ resource "aws_db_instance" "default" {
   skip_final_snapshot  = "true"
 }
 
-module "rds_alarms" {
-  source         = "git::https://github.com/cloudposse/terraform-aws-rds-cloudwatch-sns-alarms.git?ref=tags/0.1.5"
+module "rds-cloudwatch-sns-alarms" {
+  source  = "cloudposse/rds-cloudwatch-sns-alarms/aws"
+  version = "0.3.1"
+  # insert the 13 required variables here
   db_instance_id = "${aws_db_instance.default.id}"
 }
 ```
