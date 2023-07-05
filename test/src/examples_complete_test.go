@@ -50,6 +50,6 @@ func TestExamplesComplete(t *testing.T) {
 		randID,
 		"rds-threshold-alerts"), snsTopicArn)
 
-	rdsArn := terraform.Output(t, terraformOptions, "rds_arn")
+	rdsArn := terraform.Output(t, terraformOptions, "rds_instance_id")
 	assert.Equal(t, fmt.Sprintf("eg-test-rds-alarms-%s", randID), rdsArn)
 }
