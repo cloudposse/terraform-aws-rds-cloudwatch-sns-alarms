@@ -14,7 +14,7 @@ variable "region" {
 }
 
 provider "aws" {
-  region = "${var.region}"
+  region = var.region
 
   # Make it faster by skipping something
   skip_get_ec2_platforms      = true
@@ -25,8 +25,8 @@ provider "aws" {
 }
 
 resource "aws_sns_topic_subscription" "subscribe_marbot" {
-  count     = "${var.marbot_endpoint_id != "" ? 1 : 0}"
-  topic_arn = "${module.rds_alarms.sns_topic_arn}"
+  count     = var.marbot_endpoint_id != "" ? 1 : 0
+  topic_arn = module.rds_alarms.sns_topic_arn
   protocol  = "https"
   endpoint  = "https://api.marbot.io/${local.marbot_endpoint["Stage"]}/endpoint/${local.marbot_endpoint["EndpointId"]}"
 }
@@ -48,5 +48,5 @@ resource "aws_db_instance" "default" {
 
 module "rds_alarms" {
   source         = "github::https://github.com/bitflight-public/terraform-aws-rds-alerts.git?ref=master"
-  db_instance_id = "${aws_db_instance.default.id}"
+  db_instance_id = aws_db_instance.default.id
 }

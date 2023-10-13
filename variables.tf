@@ -50,3 +50,22 @@ variable "swap_usage_threshold" {
 
   # 256 Megabyte in Byte
 }
+
+
+variable "additinal_alert_actions" {
+  type = list(string)
+  default = []
+  description = "A list of additional alarm ."
+}
+
+variable "additinal_ok_actions" {
+  type = list(string)
+  default = []
+  description = "A list of additional ok actions."
+}
+
+variable "additional_insufficient_data_actions" {
+  type = list(string)
+  default = []
+  description = "A list of additional insufficient_data actions."
+}

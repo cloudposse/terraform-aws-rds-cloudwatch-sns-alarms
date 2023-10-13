@@ -4,7 +4,7 @@ variable "region" {
 }
 
 provider "aws" {
-  region = "${var.region}"
+  region = var.region
 
   # Make it faster by skipping something
   skip_get_ec2_platforms      = true
@@ -31,13 +31,13 @@ resource "aws_db_instance" "default" {
 
 module "rds_alarms" {
   source         = "../../"
-  db_instance_id = "${aws_db_instance.default.id}"
+  db_instance_id = aws_db_instance.default.id
 }
 
 output "rds_alarms_sns_topic_arn" {
-  value = "${module.rds_alarms.sns_topic_arn}"
+  value = module.rds_alarms.sns_topic_arn
 }
 
 output "rds_arn" {
-  value = "${aws_db_instance.default.id}"
+  value = aws_db_instance.default.id
 }
