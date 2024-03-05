@@ -3,6 +3,15 @@ variable "db_instance_id" {
   type        = string
 }
 
+variable "kms_master_key_id" {
+  description = <<-EOT
+    The ID of an AWS-managed customer master key (CMK) for Amazon SNS (or an alias ARN `alias/aws/sns`) or a custom CMK.
+    For more information, see https://docs.aws.amazon.com/sns/latest/dg/sns-server-side-encryption.html#sse-key-terms.
+  EOT
+  type        = string
+  default     = null
+}
+
 variable "burst_balance_threshold" {
   description = "The minimum percent of General Purpose SSD (gp2) burst-bucket I/O credits available."
   type        = number
