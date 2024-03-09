@@ -1,4 +1,3 @@
----
 #
 # This is the canonical configuration for the `README.md`
 # Run `make readme` to rebuild the `README.md`
@@ -15,23 +14,21 @@ github_repo: cloudposse/terraform-aws-rds-cloudwatch-sns-alarms
 
 # Badges to display
 badges:
-  - name: "Build Status"
-    image: "https://travis-ci.org/cloudposse/terraform-aws-rds-cloudwatch-sns-alarms.svg?branch=master"
-    url: "https://travis-ci.org/cloudposse/terraform-aws-rds-cloudwatch-sns-alarms"
-  - name: "Latest Release"
-    image: "https://img.shields.io/github/release/cloudposse/terraform-aws-rds-cloudwatch-sns-alarms.svg"
-    url: "https://github.com/cloudposse/terraform-aws-rds-cloudwatch-sns-alarms/releases"
-  - name: "Slack Community"
-    image: "https://slack.cloudposse.com/badge.svg"
-    url: "https://slack.cloudposse.com"
-
-# Short description of this project
+  - name: Latest Release
+    image: https://img.shields.io/github/release/cloudposse/terraform-aws-rds-cloudwatch-sns-alarms.svg?style=for-the-badge
+    url: https://github.com/cloudposse/terraform-aws-rds-cloudwatch-sns-alarms/releases/latest
+  - name: Last Updated
+    image: https://img.shields.io/github/last-commit/cloudposse/terraform-aws-rds-cloudwatch-sns-alarms.svg?style=for-the-badge
+    url: https://github.com/cloudposse/terraform-aws-rds-cloudwatch-sns-alarms/commits
+  - name: Slack Community
+    image: https://slack.cloudposse.com/for-the-badge.svg
+    url: https://slack.cloudposse.com
 description: |-
   Terraform module that configures important RDS alerts using CloudWatch and sends them to an SNS topic.
 
   Create a set of sane RDS CloudWatch alerts for monitoring the health of an RDS instance.
 
-usage: |-
+usage: |2-
 
   | area    | metric           | comparison operator  | threshold | rationale                                                                                                                                                                                              |
   |---------|------------------|----------------------|-----------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
@@ -43,7 +40,7 @@ usage: |-
   | Memory  | FreeableMemory   | `<`                  | 64 MB     | This number is calculated from our experience with RDS workloads.                                                                                                                                      |
   | Memory  | SwapUsage        | `>`                  | 256 MB    | Sometimes you can not entirely avoid swapping. But once the database accesses paged memory, it will slow down.                                                                                         |
 
-examples: |-
+examples: |2-
 
   See the [`examples/`](examples/) directory for working examples.
 
@@ -74,6 +71,8 @@ include:
   - "docs/terraform.md"
   - "docs/targets.md"
 
+
+# List any related terraform modules that this module may be used with or that this module depends on.
 related:
   - name: "terraform-aws-ec2-cloudwatch-sns-alarms"
     description: "Terraform module that configures CloudWatch SNS alerts for EC2 instances"
@@ -100,14 +99,4 @@ related:
     url: "https://github.com/cloudposse/terraform-aws-sqs-cloudwatch-sns-alarms"
 
 # Contributors to this project
-contributors:
-  - name: "Jamie Nelson"
-    github: "Jamie-BitFlight"
-  - name: "Erik Osterman"
-    github: "osterman"
-  - name: "Daniel Patriche"
-    github: "rebelthor"
-  - name: "Pavels Veretennikovs"
-    github: "rfvermut"
-  - name: "Joe Niland"
-    github: "joe-niland"
+contributors: []
