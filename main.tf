@@ -14,6 +14,8 @@ module "topic_label" {
 resource "aws_sns_topic" "default" {
   count = module.this.enabled ? 1 : 0
   name  = module.topic_label.id
+
+  kms_master_key_id = var.kms_master_key_id
 }
 
 module "subscription_label" {

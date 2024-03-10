@@ -20,5 +20,6 @@ resource "aws_db_instance" "default" {
 module "rds_alarms" {
   source         = "../../"
   db_instance_id = aws_db_instance.default.id
+  depends_on     = [aws_db_instance.default]
   context        = module.this.context
 }
