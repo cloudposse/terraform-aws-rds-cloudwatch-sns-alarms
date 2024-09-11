@@ -5,3 +5,5 @@ repository:
   description: Terraform module that configures important RDS alerts using CloudWatch and sends them to an SNS topic
   homepage: https://cloudposse.com/accelerate
   topics: terraform, terraform-module, sns, cloudwatch, alerts, aws, rds-alerts
+
+
