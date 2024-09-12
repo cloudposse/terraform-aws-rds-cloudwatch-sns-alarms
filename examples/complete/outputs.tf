@@ -5,5 +5,5 @@ output "rds_alarms_sns_topic_arn" {
 
 output "rds_arn" {
   description = "The ARN of the RDS"
-  value        = aws_db_instance.default.id
+  value       = aws_db_instance.default.id
 }
