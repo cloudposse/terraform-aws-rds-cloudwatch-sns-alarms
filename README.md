@@ -3,7 +3,7 @@
 <!-- markdownlint-disable -->
 <a href="https://cpco.io/homepage"><img src="https://github.com/cloudposse/terraform-aws-rds-cloudwatch-sns-alarms/blob/main/.github/banner.png?raw=true" alt="Project Banner"/></a><br/>
     <p align="right">
-<a href="https://github.com/cloudposse/terraform-aws-rds-cloudwatch-sns-alarms/releases/latest"><img src="https://img.shields.io/github/release/cloudposse/terraform-aws-rds-cloudwatch-sns-alarms.svg?style=for-the-badge" alt="Latest Release"/></a><a href="https://github.com/cloudposse/terraform-aws-rds-cloudwatch-sns-alarms/commits"><img src="https://img.shields.io/github/last-commit/cloudposse/terraform-aws-rds-cloudwatch-sns-alarms.svg?style=for-the-badge" alt="Last Updated"/></a><a href="https://slack.cloudposse.com"><img src="https://slack.cloudposse.com/for-the-badge.svg" alt="Slack Community"/></a></p>
+<a href="https://github.com/cloudposse/terraform-aws-rds-cloudwatch-sns-alarms/releases/latest"><img src="https://img.shields.io/github/release/cloudposse/terraform-aws-rds-cloudwatch-sns-alarms.svg?style=for-the-badge" alt="Latest Release"/></a><a href="https://github.com/cloudposse/terraform-aws-rds-cloudwatch-sns-alarms/commits"><img src="https://img.shields.io/github/last-commit/cloudposse/terraform-aws-rds-cloudwatch-sns-alarms.svg?style=for-the-badge" alt="Last Updated"/></a><a href="https://cloudposse.com/slack"><img src="https://slack.cloudposse.com/for-the-badge.svg" alt="Slack Community"/></a></p>
 <!-- markdownlint-restore -->
 
 <!--
@@ -49,7 +49,6 @@ Create a set of sane RDS CloudWatch alerts for monitoring the health of an RDS i
 
 ## Usage
 
-
 | area    | metric           | comparison operator  | threshold | rationale                                                                                                                                                                                              |
 |---------|------------------|----------------------|-----------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | Storage | BurstBalance     | `<`                  | 20 %      | 20 % of credits allow you to burst for a few minutes which gives you enough time to a) fix the inefficiency, b) add capacity or c) switch to io1 storage type.                                         |
@@ -71,7 +70,6 @@ Create a set of sane RDS CloudWatch alerts for monitoring the health of an RDS i
 
 
 ## Examples
-
 
 See the [`examples/`](examples/) directory for working examples.
 
@@ -177,19 +175,11 @@ module "rds_alarms" {
 |------|-------------|
 | <a name="output_sns_topic_arn"></a> [sns\_topic\_arn](#output\_sns\_topic\_arn) | The ARN of the SNS topic |
 <!-- markdownlint-restore -->
-<!-- markdownlint-disable -->
-## Makefile Targets
-```text
-Available targets:
 
-  help                                Help screen
-  help/all                            Display help for all targets
-  help/short                          This help short screen
-  lint                                Lint terraform code
-  test/%                              Run Terraform commands in the examples/complete folder; e.g. make test/plan
 
-```
-<!-- markdownlint-restore -->
+
+
+
 
 
 ## Related Projects
